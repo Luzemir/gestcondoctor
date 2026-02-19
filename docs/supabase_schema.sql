@@ -1,7 +1,10 @@
 -- Criação de Tabelas para Gestcon Doctor
 
+-- Habilitar extensão para UUID
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 -- 1. Empresas (Multi-tenant)
-CREATE TABLE empresas (
+CREATE TABLE IF NOT EXISTS empresas (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     nome TEXT NOT NULL,
     cnpj TEXT UNIQUE,
@@ -9,7 +12,7 @@ CREATE TABLE empresas (
 );
 
 -- 2. Convenios
-CREATE TABLE convenios (
+CREATE TABLE IF NOT EXISTS convenios (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     empresa_id UUID REFERENCES empresas(id),
     nome TEXT NOT NULL,
@@ -19,8 +22,8 @@ CREATE TABLE convenios (
 );
 
 -- 3. Medicos
-CREATE TABLE medicos (
-    id PRIMARY KEY DEFAULT uuid_generate_v4(),
+CREATE TABLE IF NOT EXISTS medicos (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     empresa_id UUID REFERENCES empresas(id),
     nome TEXT NOT NULL,
     cpf TEXT,
@@ -31,8 +34,8 @@ CREATE TABLE medicos (
 );
 
 -- 4. Hospitais
-CREATE TABLE hospitais (
-    id PRIMARY KEY DEFAULT uuid_generate_v4(),
+CREATE TABLE IF NOT EXISTS hospitais (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     empresa_id UUID REFERENCES empresas(id),
     nome TEXT NOT NULL,
     cnpj TEXT,
@@ -46,8 +49,8 @@ CREATE TABLE hospitais (
 );
 
 -- 5. Tabelas de Preço
-CREATE TABLE tabelas_preco (
-    id PRIMARY KEY DEFAULT uuid_generate_v4(),
+CREATE TABLE IF NOT EXISTS tabelas_preco (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     empresa_id UUID REFERENCES empresas(id),
     convenio_id UUID REFERENCES convenios(id),
     nome_origem TEXT NOT NULL, -- ex: CBHPM, AMB, TUSS
@@ -59,8 +62,8 @@ CREATE TABLE tabelas_preco (
 );
 
 -- 6. Itens da Tabela
-CREATE TABLE tabelas_preco_itens (
-    id PRIMARY KEY DEFAULT uuid_generate_v4(),
+CREATE TABLE IF NOT EXISTS tabelas_preco_itens (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     tabela_preco_id UUID REFERENCES tabelas_preco(id),
     codigo TEXT NOT NULL,
     descricao TEXT NOT NULL,
