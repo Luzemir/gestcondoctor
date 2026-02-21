@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
 import { ShieldCheck, Files, Plus } from 'lucide-react'
+import TabelasPreco from './TabelasPreco'
 
 export default function Convenios() {
     const [convenios, setConvenios] = useState([])
     const [loading, setLoading] = useState(true)
+    const [selectedConvenioId, setSelectedConvenioId] = useState(null)
 
     useEffect(() => {
         fetchConvenios()
@@ -23,6 +25,10 @@ export default function Convenios() {
             setConvenios(data)
         }
         setLoading(false)
+    }
+
+    if (selectedConvenioId) {
+        return <TabelasPreco convenioId={selectedConvenioId} onBack={() => setSelectedConvenioId(null)} />
     }
 
     return (
@@ -55,11 +61,14 @@ export default function Convenios() {
                             <p className="text-slate-400 text-sm mb-6 line-clamp-2">{convenio.observacoes || 'Sem observações.'}</p>
 
                             <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate-700">
-                                <button className="flex items-center space-x-1 text-xs text-slate-400 hover:text-white transition-colors">
+                                <button
+                                    onClick={() => setSelectedConvenioId(convenio.id)}
+                                    className="flex items-center space-x-1 text-xs text-blue-500 hover:text-blue-400 font-semibold transition-colors"
+                                >
                                     <Files size={14} />
-                                    <span>Ver Tabelas</span>
+                                    <span>Ver Tabelas & Preços</span>
                                 </button>
-                                <button className="text-blue-500 hover:text-blue-400 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                                <button className="text-slate-400 hover:text-white text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
                                     Configurar
                                 </button>
                             </div>
