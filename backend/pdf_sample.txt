@@ -1,0 +1,452 @@
+
+--- PÁGINA 21 ---
+INSTRUÇÕES
+GERAIS
+
+--- PÁGINA 22 ---
+22
+Classificação Brasileira Hierarquizada de Procedimentos Médicos – CBHPM – 2022
+1. CLASSIFICAÇÃO HIERARQUIZADA DE PROCEDIMENTOS MÉDICOS
+1.1.	A presente Classificação de Procedimentos foi elaborada com base em critérios técnicos e tem como fina­
+lidade hierarquizar os procedimentos médicos aqui descritos, servindo como referência para estabelecer 
+faixas de valoração dos atos médicos pelos seus portes. Ela atualiza e substitui as listas de procedimentos 
+anteriormente publicadas por esta Associação.
+1.2.	Os portes representados ao lado de cada procedimento não expressam valores monetários, apenas esta­
+belecem a comparação entre os diversos atos médicos no que diz respeito à sua complexidade técnica, 
+tempo de execução, atenção requerida e grau de treinamento necessário para a capacitação do profissio­
+nal que o realiza.
+1.3.	A pontuação dos procedimentos médicos, que foi realizada por representantes das Sociedades Brasileiras 
+de Especialidades com assessoria da FIPE – Fundação Instituto de Pesquisas Econômicas, está agrupa­
+da em 14 portes e três subportes (A, B e C). Os portes anestésicos (AN) permanecem em número de 
+oito e mantém correspondência com os demais portes. Os portes de atos médicos laboratoriais seguem 
+os mesmos critérios dos portes dos procedimentos, mas correspondem a frações do menor porte (1A). 
+Quanto aos custos, estabeleceu-se a unidade de custo operacional (UCO), que incorpora depreciação de 
+equipamentos, manutenção, mobiliário, imóvel, aluguéis, folha de pagamento e outras despesas compro­
+vadamente associadas aos procedimentos médicos. Este custo foi calculado para os Procedimentos Diag­
+nósticos e Terapêuticos, bem como aos procedimentos classificados em outros Capítulos quando envolve 
+outras despesas além do ato médico. Custos operacionais referentes a acessórios e descartáveis serão 
+ajustados diretamente e de comum acordo entre as partes. A valoração dos portes e da UCO ficará sujeita 
+a alteração sempre que modificadas as condições que nortearam suas fixações, sendo admitida banda de 
+até 20%, para mais ou para menos como valores referenciais mínimos, em respeito à regionalização e a 
+partir destes, os valores deverão ser acordados por livre negociação entre as partes.
+1.4.	Os atendimentos contratados de acordo com esta Classificação de Procedimentos serão realizados em 
+locais, dias e horários preestabelecidos. 
+1.5.	Esta classificação constitui referência para acomodações hospitalares coletivas (enfermaria ou quartos com 
+dois ou mais leitos).
+2. ATENDIMENTO DE URGÊNCIA E EMERGÊNCIA
+2.1.	Os atos médicos praticados em caráter de urgência ou emergência terão um acréscimo de trinta por cento 
+(30%) em seus portes nas seguintes eventualidades:
+2.1.1.	 No período compreendido entre 19h e 7h do dia seguinte;
+2.1.2.	 Em qualquer horário aos sábados, domingos e feriados;
+2.1.3.	 Ao ato médico iniciado no período normal e concluído no período de urgência/emergência, apli­
+ca-se o acréscimo de 30% quando mais da metade do procedimento for realizado no horário de 
+urgência/emergência.
+3. NORMAS GERAIS
+3.1.	Os portes atribuídos a cada procedimento cirúrgico incluem os cuidados pós-operatórios relacionados 
+com o tempo de permanência do paciente no hospital, até 10 (dez) dias após o ato cirúrgico. Esgotado 
+esse prazo, a valoração do porte passa ser regida conforme critérios estabelecidos para as visitas hospita­
+lares (código 1.01.02.01-9) ou para as consultas em consultório (código 1.01.01.01-2), quando se fizer 
+necessário um acompanhamento ambulatorial.
+
+--- PÁGINA 23 ---
+23
+Classificação Brasileira Hierarquizada de Procedimentos Médicos – CBHPM – 2022
+3.2.	Procedimento por vídeo
+a) Os procedimentos cirúrgicos realizados por Vídeo têm portes independentes dos seus correlatos realizados 
+por técnica convencional. Para a sua valoração foram utilizados os mesmos atributos aplicados aos atos con­
+vencionais: tempo, cognição, complexidade e risco. Esses portes estão sujeitos ao item 6 destas Instruções.
+b) Aos procedimentos diagnósticos realizados por Videolaparoscopia e Videoendoscopia não se aplica o 
+disposto no item 6 destas Instruções.
+3.3.	Nos procedimentos cirúrgicos e invasivos, a taxa de sala e a taxa de uso de equipamento, quando estas 
+pertencerem ao hospital, devem ser negociadas entre as partes interessadas, ou seja, prestador de serviços 
+e operadoras de planos de saúde. Nos procedimentos videoassistidos, quando o equipamento pertencer 
+à equipe médica, esta terá direito à taxa de uso de equipamento, valorada na coluna “Custo Operacional”. 
+No entanto, quando o equipamento de vídeo pertencer ao hospital, essa valoração deverá ser negociada 
+entre as partes interessadas.
+4. VALORAÇÃO DOS ATOS CIRÚRGICOS
+4.1.	Quando previamente planejada, ou quando se verificar, durante o ato cirúrgico, a indicação de atuar em 
+vários órgãos ou regiões ou em múltiplas estruturas articulares a partir da mesma via de acesso, a quan­
+tificação do porte da cirurgia será a que corresponder, por aquela via, ao procedimento de maior porte, 
+acrescido de 50% do previsto para cada um dos demais atos médicos praticados, desde que não haja um 
+código específico para o conjunto.
+4.2.	Quando ocorrer mais de uma intervenção por diferentes vias de acesso, deve ser adicionado ao porte 
+da cirurgia considerada principal o equivalente a 70% do porte de cada um dos demais atos praticados.
+4.3.	Obedecem às normas acima as cirurgias bilaterais, realizadas por diferentes incisões (70%), ou pela mes­
+ma incisão (50%).
+4.4.	Quando duas equipes distintas realizarem simultaneamente atos cirúrgicos diferentes, a cada uma delas 
+será atribuído porte de acordo com o procedimento realizado e previsto nesta Classificação.
+4.5.	Quando um ato cirúrgico for parte integrante de outro, valorar-se-á não o somatório do conjunto, mas 
+apenas o ato principal. 
+4.6.	Nas cirurgias em crianças com peso inferior a 2,500 g ou nascidos anteriormente a 37 semanas gestacio­
+nais completas, fica previsto acréscimo de 100% sobre o porte do procedimento realizado.
+4.7.	Nas cirurgias em neonatos (por definição, indivíduos de 0 a 28 dias de vida) e lactentes (por definição, 
+indivíduos de 29 dias de vida a 24 meses de idade), fica previsto acréscimo de 50% sobre o porte do 
+procedimento realizado.
+4.8.	Nas cirurgias em pré-escolares até público pediátrico (por definição, dos 24 meses completos até doze anos 
+de idade incompletos), fica previsto acréscimo de 30% sobre o porte do procedimento realizado.
+5. AUXILIARES DE CIRURGIA
+5.1.	A valoração dos serviços prestados pelos médicos auxiliares dos atos cirúrgicos corresponderá ao percen­
+tual de 60% da valoração do porte ao ato praticado pelo cirurgião para o primeiro auxiliar, 40% para o 
+segundo auxiliar, 30% para o terceiro e, quando o caso exigir, também para o quarto auxiliar.
+5.2.	Quando uma equipe, num mesmo ato cirúrgico, realizar mais de um procedimento, o número de auxi­
+liares será igual ao previsto para o procedimento de maior porte, e a valoração do porte para os serviços 
+desses auxiliares será calculada sobre a totalidade dos serviços realizados pelo cirurgião.
+
+--- PÁGINA 24 ---
+24
+Classificação Brasileira Hierarquizada de Procedimentos Médicos – CBHPM – 2022
+6. CONDIÇÕES DE INTERNAÇÃO
+6.1.	Quando o paciente voluntariamente internar-se em ACOMODAÇÕES HOSPITALARES SUPERIORES, 
+diferentes das previstas no item 1.5 destas Instruções e do previsto em seu plano de saúde original, a 
+valoração do porte referente aos procedimentos será complementada por negociação entre o paciente e o 
+médico, servindo como referência o item 6.2 destas Instruções.
+6.2.	Para os planos superiores ofertados por operadoras, diferentemente do previsto no citado item 1.5, fica prevista 
+a valoração do porte pelo dobro de sua quantificação, nos casos de pacientes internados em apartamento ou 
+quarto privativo, em “hospital-dia” ou UTI. Não estão sujeitos às condições deste item os atos médicos do capítulo 
+IV (Diagnósticos e Terapêuticos), exceto quando previstos em observações específicas do capítulo.
+6.3.	Eventuais acordos operacionais entre operadoras de serviços de saúde e hospitais não podem diminuir a 
+quantificação dos portes estabelecidos para equipe médica, observados os itens acima (6.1 e 6.2). 
+7. APLICAÇÃO
+7.1.	As solicitações, autorizações, bem como eventuais negativas de consultas, exames e procedimentos de­
+verão ser sempre realizadas por escrito e identificadas tanto por parte dos médicos como das operadoras.
+7.2.	As interpretações referentes à aplicação desta Classificação de Procedimentos serão efetuadas com exclusi­
+vidade pela Associação Médica Brasileira e suas Sociedades Brasileiras de Especialidade.
+7.3.	Cabe à Associação Médica Brasileira, com apoio das Sociedades Brasileiras de Especialidade, definir alte­
+rações nesta Classificação de Procedimentos sempre que julgar necessário corrigir, atualizar ou modificar 
+o que nela estiver contido. 
+7.4.	A introdução de novos procedimentos nesta Classificação deverá passar por aprovação prévia da Câmara 
+Técnica Permanente da CBHPM coordenada pela Associação Médica Brasileira, Conselho Federal de Medi­
+cina e Sociedades Brasileiras de Especialidade. À Comissão Nacional de Honorários Médicos caberá esta­
+belecer a hierarquia e valoração dos novos procedimentos. Contudo, procedimentos de tecnologia recente 
+que estejam sendo introduzidos na prática médica, mas ainda não codificados na presente Classificação, 
+embora reconhecidos e considerados não experimentais, podem ser negociados diretamente entre as 
+partes interessadas (prestadores e contratantes de serviços médicos).
+7.5.	As disposições específicas para os grupos de procedimentos constam no corpo de cada capítulo correspondente.
+7.6.	Esta Classificação não expressa qualquer divisão por especialidade médica, havendo procedimentos mes­
+clados em várias seções e realizados por várias especialidades. A abrangência de atuação médica de cada 
+especialista ou clínico deve ser definida p¹elas Sociedades de Especialidade e a Associação Médica Brasileira.
+7.7.	A Hierarquização e a valoração do Porte de cada procedimento consideram sua execução por aquele profis­
+sional com a mais alta qualificação para o ato médico segundo a Especialidade Médica e/ou Área de Atua­
+ção e conforme normativo vigente, aprovado pela Comissão Mista de Especialidades (CME) e homologado 
+pelo plenário do Conselho Federal de Medicina (CFM).
+7.8.	Os procedimentos hierarquizados nesta Classificação, com seus respectivos Portes, poderão ser aplicados 
+e executados, quando assim for permitido, mediados por tecnologias em tempo real on-line (síncrona) ou 
+off-line (assíncrona), por multimeios em tecnologia, conforme legislação específica em vigor.
+
+--- PÁGINA 25 ---
+CAPÍTULO 
+1
+PROCEDIMENTOS
+GERAIS
+
+--- PÁGINA 26 ---
+26
+Classificação Brasileira Hierarquizada de Procedimentos Médicos – CBHPM – 2022
+PROCEDIMENTOS GERAIS
+CONSULTAS	
+1.01.00.00-8
+Código
+Procedimento
+Porte
+CONSULTAS 
+1.01.01.00-4
+1.01.01.01-2
+Consulta em horário normal ou preestabelecido
+2B
+1.01.01.02-0
+Consulta em domicílio
+3A
+1.01.01.03-9
+Consulta em pronto-socorro
+2C
+1.01.01.99-3 OBSERVAÇÕES
+1.	 Aos atendimentos realizados em pronto-socorro, será aplicado o que consta no item 2 das 
+Instruções Gerais.
+2.	 A consulta de oftalmologia padrão inclui: anamnese, refração, inspeção das pupilas, acuidade 
+visual, retinoscopia e ceratometria, fundoscopia, biomicroscopia do segmento anterior, exame 
+sumário da motilidade ocular e do senso cromático.
+3.	 CONSULTA MÉDICA – PRAZO DE VALIDADE – RECONSULTA
+•	 A consulta médica compreende anamnese, exame físico, conclusão diagnóstica, prognóstico e 
+prescrição terapêutica, caracterizando, assim, um ato médico completo (concluído ou não num 
+único período de tempo).
+•	 Quando houver necessidade de exames complementares que não podem ser executados e 
+apreciados nesse período de tempo, este ato médico terá continuidade e finalização quando o 
+paciente retornar com os exames solicitados, não devendo, portanto, neste caso, ser considerado 
+como uma nova consulta.
+•	 Se, porventura, este retorno ocorrer quando existirem alterações de sinais ou sintomas que ve­
+nham a requerer a necessidade de nova anamnese, exame físico completo, prognóstico, conclu­
+são diagnóstica e/ou prescrição terapêutica, o procedimento deve ser considerado como uma 
+nova consulta e, dessa forma, ser remunerada.
+•	 Nos casos de tratamentos prolongados, quando há necessidade periódica de reavaliação e 
+até modificações terapêuticas, as respectivas consultas poderão ser cobradas, assim como as 
+orientações, os acompanhamentos e os monitoramentos necessários.
+•	 Exigir que se cumpra a lei 9.656/98, que estabelece que não pode haver limitação para o número 
+de consultas médicas em clínicas básicas ou especializadas. 
+•	 Às orientações, aos acompanhamentos e aos monitoramentos médicos pode ser aplicado o 
+código 1.01.01.01-2, em não havendo outra codificação específica nesta Classificação.
+VISITAS 
+1.01.02.00-0
+1.01.02.01-9
+Visita hospitalar a paciente internado 
+2B
+1.01.02.02-7
+Visita ou consulta hospitalar do médico assistente
+3A
+1.01.02.99-0 OBSERVAÇÃO
+Para visita hospitalar, será observado o que consta dos itens 3.1 e 6 das Instruções Gerais.
+RECÉM-NASCIDO 
+1.01.03.00-7
+1.01.03.01-5
+Atendimento ao recém-nascido em berçário 
+3C
+1.01.03.03-1
+Atendimento ao recém-nascido em sala de parto (parto normal ou operatório de alto risco)
+5B
+1.01.03.02-3
+Atendimento ao recém-nascido em sala de parto (parto normal ou operatório de baixo risco)
+4C
+1.01.03.99-6 OBSERVAÇÕES
+1.	 Será obedecido o que consta no item 6 das Instruções Gerais.
+2.	 Em caso de parto múltiplo, o atendimento pediátrico a cada recém-nato deve ser considerado 
+individualmente.
+3.	 Se o recém-nascido permanecer internado após o terceiro dia, será feita guia de internação com o 
+diagnóstico da patologia e fixado o porte, a partir daí, correspondente a UMA VISITA HOSPITALAR 
+por dia até a alta, de acordo com o código 1.01.02.01-9 (Tratamento Clínico).
+4.	 Atendimento em sala de parto de recém-nascido a termo com peso adequado para idade gesta­
+cional, sem patologia.
+5.	 Atendimento ao recém-nascido prematuro ou que necessita de manobras de reanimação com 
+uso de O2 sob pressão positiva e/ou entubação traqueal.
+
+--- PÁGINA 27 ---
+27
+Classificação Brasileira Hierarquizada de Procedimentos Médicos – CBHPM – 2022
+PROCEDIMENTOS GERAIS
+CONSULTAS	
+1.01.00.00-8
+Código
+Procedimento
+Porte
+UTI 
+1.01.04.00-3
+1.01.04.01-1
+Atendimento do intensivista diarista (por turno e por paciente)
+2B
+1.01.04.02-0
+Atendimento médico do intensivista em UTI geral ou pediátrica (plantão de 12 horas – por 
+paciente)
+3C
+1.01.04.99-2 OBSERVAÇÕES
+•	 Nos portes indicados para o plantonista de UTI não estão incluídos: diálise, acesso vascular para 
+hemodiálise, implante de marcapasso e traqueostomia. Tais procedimentos serão valorados à 
+parte, respeitados os portes para eles previstos nesta Classificação Hierarquizada.
+•	 Os acessos vasculares dos procedimentos 3.09.13.01-2 – Implante de cateter venoso central por 
+punção, para NPP, QT, hemodepuração ou para infusão de soros/drogas; e/ou 3.09.13.02-0 –  
+Instalação de cateter para monitorização hemodinâmica à beira do leito (Swan-Ganz), quando 
+guiados por ultrassonografia, devem ser acrescidos do código 4.09.01.21-1 US – Estruturas su­
+perficiais (cervical, axila, músculo ou tendão).
+•	 Estão incluídos nos portes do plantonista: intubação, monitorizações clínicas com ou sem auxílio 
+de equipamentos, desfibrilação e punção venosa (intracath).
+•	 Os atos do médico intensivista, médico assistente ou de especialistas, quando praticados 
+por solicitação ou indicação do intensivista, serão valorados considerando os atendimentos 
+efetivamente realizados e registrados em prontuário.
+•	 Será obedecido o que consta nos itens 2 e 6 das Instruções Gerais. Estes critérios não se aplicam 
+aos portes do plantonista.
+•	 O atendimento do paciente por turno, referente ao código 1.01.04.01-1, está em conformidade 
+com a Resolução ANVISA n. 7, de 24 de fevereiro de 2010, e com a Resolução do Conselho 
+Federal de Medicina CFM n. 2.271/2020.
+REMOÇÃO/ACOMPANHAMENTO DE PACIENTE  
+1.01.05.00-0
+1.01.05.07-7
+Acompanhamento médico para transporte intra-hospitalar de pacientes graves, com 
+ventilação assistida, da UTI para o centro de diagnóstico
+2B
+1.01.05.08-5
+Avaliação hemoterápica
+2B
+1.01.05.05-0
+Transporte extra-hospitalar aéreo ou aquático de pacientes graves, 1ª hora – a partir do 
+deslocamento do médico
+5B
+1.01.05.06-9
+Transporte extra-hospitalar aéreo ou aquático de pacientes graves, por hora adicional
+5B
+1.01.05.03-4
+Transporte extra-hospitalar terrestre de pacientes graves, 1ª hora – a partir do deslocamento 
+do médico
+4A
+1.01.05.04-2
+Transporte extra-hospitalar terrestre de pacientes graves, por hora adicional – até o retorno 
+do médico à base
+4A
+1.01.05.99-9 OBSERVAÇÕES
+1.	 Cobertura obrigatória, quando preenchidos, obrigatoriamente, os dois critérios abaixo:
+a.	 Pacientes de qualquer idade que necessitam de transfusão de componentes sanguíneos em 
+regime ambulatorial ou hospitalar.
+b.	 Serviço transfusional sob responsabilidade de médico especialista em Hematologia e Hemoterapia 
+ou que tenha, no seu corpo clínico, médico(s) especialista(s) em Hematologia e Hemoterapia, o qual, 
+por meio da análise da requisição transfusional, confrontada com os dados clínicos de prontuário, 
+os resultados de exames e o contato com o médico requisitante, para, em comum acordo, aceitar, 
+suspender ou adequar doses, número de unidades, tipos de hemocomponentes, modificações 
+(irradiação, fenotipagem, lavagem, filtragem, etc.) da transfusão a ser realizada.
+2.	 A remuneração deverá ser de porte 2B, sem UCO, para cada REQUISIÇÃO TRANSFUSIONAL, única 
+ou múltipla.
+
+--- PÁGINA 28 ---
+28
+Classificação Brasileira Hierarquizada de Procedimentos Médicos – CBHPM – 2022
+PROCEDIMENTOS GERAIS
+CONSULTAS	
+1.01.00.00-8
+Código
+Procedimento
+Porte
+Custo
+Oper.
+OUTROS 
+1.01.06.00-6
+1.01.06.01-4
+Aconselhamento genético 
+4A
+–
+1.01.06.15-4
+Atendimento ambulatorial oftalmológico de criança pré-verbal (< 4 anos) ou 
+crianças com déficit intelectual, dificuldade de comunicação ou pouco colaborativas 
+realizado em consultório
+3B
+–
+1.01.06.14-6
+Atendimento ambulatorial em puericultura 
+3B
+–
+1.01.06.03-0
+Atendimento ao familiar do adolescente 
+1C
+–
+1.01.06.16-2
+Atendimento para avaliação oftalmológica ao recém-nascido em berçário ou UTI
+3C
+–
+1.01.06.04-9
+Atendimento pediátrico a gestantes (3º trimestre) 
+2B
+–
+1.01.06.17-0
+Consulta ocupacional
+2B
+–
+1.01.06.11-1
+Exame de aptidão física e mental para concessão de benefícios fiscais conferidos 
+pela Secretaria da Receita Federal e da Fazenda Estadual, a que fazem jus portadores 
+de mobilidade reduzida, com necessidade de adaptação veicular
+3B
+1,500
+1.01.06.12-0
+Exame de aptidão física e mental para ratificação, quando a condição física e mental 
+assim o requerer, dos exames realizados pelo órgão previdenciário, incluindo 
+restrição ou liberação para a condução de veículo automotor
+3B
+1,500
+1.01.06.06-5
+Exame de aptidão física e mental, ou em portadores de mobilidade reduzida, para 
+fins de inscrição ou renovação de CNH (Carteira Nacional de Habilitação)
+3B
+1,500
+1.01.06.09-0
+Junta Médica – pagamento de honorários médicos referente a 3ª opinião, conforme 
+resolução Consu nº 8
+11B
+–
+1.01.06.07-3
+Junta Médica (três ou mais profissionais) – destina-se ao esclarecimento diagnóstico 
+ou decisão de conduta em caso de difícil solução – por profissional
+3B
+–
+1.01.06.13-8
+Prova de direção veicular em banca especial – Avaliação Clínica durante a prova prática 
+de direção veicular procedida por dois médicos simultaneamente – por profissional
+3B
+–
+1.01.06.99-5 OBSERVAÇÕES
+a. Referente ao código 1.01.06.01-4:
+•	 Entende-se por aconselhamento genético o ato médico de avaliação de cada caso 
+e condutas cabíveis, incluindo todas as consultas, do paciente e núcleo familiar, 
+para esclarecimento do diagnóstico e prognóstico. Nos casos pertinentes serão 
+estabelecidos os riscos de recorrência que serão comunicados aos interessados através 
+do aconselhamento genético.
+b. Referente ao código 1.01.06.14-6:
+•	 Não se refere à consulta por patologia aguda ou crônica já identificada.
+•	 O atendimento ambulatorial em puericultura é sequencial e limitado, conforme calendário 
+abaixo.
+•	 Tabela de frequência e regularidade dos procedimentos de puericultura.
+c. Referente ao código 1.01.06.17-0:
+•	 Estão excluídos os exames/procedimentos ocupacionais previsto na NR7. 
+Procedimentos: 
+Avaliação médica do trabalhador, avaliação de acidente de trabalho, avaliação de nexo 
+causal entre doença e trabalho, avaliação de absenteísmo, avaliação de doenças/lesões 
+e sua compatibilidade com a função laborativa, pareceres técnicos ocupacionais.
+
+--- PÁGINA 29 ---
+29
+Classificação Brasileira Hierarquizada de Procedimentos Médicos – CBHPM – 2022
+PROCEDIMENTOS GERAIS
+CONSULTA	
+1.01.00.00-8
+1.01.06.99-5  OBSERVAÇÕES (continuação)
+Lactente
+0-2 anos
+Pré-escolar
+2-4 anos
+Escolar
+5-10 anos
+Adolescente
+11-19 anos
+1ª semana
+24 meses
+5 anos
+11 anos
+1 mês
+30 meses
+6 anos
+12 anos
+2 meses
+36 meses
+7 anos
+13 anos
+3 meses
+42 meses
+8 anos
+14 anos
+4 meses
+48 meses
+9 anos
+15 anos
+5 meses
+10 anos
+16 anos
+6 meses
+17 anos
+9 meses
+18 anos
+12 meses
+19 anos
+15 meses
+18 meses
+O atendimento ambulatorial em puericultura inclui as ações a serem realizadas nos atendimentos 
+agendados em conformidade com os itens abaixo descritos: 
+•	 avaliação do desenvolvimento neuropsicomotor;
+•	 avaliação do desempenho escolar e dos cuidados dispensados pela escola;
+•	 avaliação do padrão de atividades físicas diárias conforme parâmetros recomendados pelo 
+Ministério da Saúde;
+•	 exame da capacidade visual;
+•	 avaliação das condições do meio ambiente conforme roteiro do Ministério da Saúde;
+•	 avaliação dos cuidados domiciliares dispensados à criança;
+•	 avaliação do desenvolvimento da sexualidade;
+•	 avaliação quantitativa e qualitativa do sono;
+•	 avaliação da função auditiva;
+•	 avaliação da saúde bucal.
+c. Referente aos códigos 1.01.06.06-5, 1.01.06.11-1 e 1.01.06.12-0:
+•	 É previsto o Custo Operacional às entidades/serviços privados com instalações físicas e 
+equipamentos conforme Resolução do CONSELHO NACIONAL DE TRÂNSITO – CONTRAN n. 425 
+de 2012 ou conforme legislação que venha substituí-la.
+
+--- PÁGINA 30 ---

@@ -1,0 +1,50 @@
+Planilhas (Abas) encontradas: ['CASSEMS_112024', 'HAPVIDA_012023', 'HAPVIDA_042025', 'SANTA_CASA_012023', 'UNIMED_INTERCAMBIO_112024', 'UNIMED_LOCAL_112024', 'VIA_ACESSO']
+
+--- Aba: CASSEMS_112024 ---
+Colunas: ['CÓDIGO', 'PROCEDIMENTO', 'VALOR', 'Unnamed: 3', 'Unnamed: 4', 'Unnamed: 5', 'Unnamed: 6']
+Primeiras 2 linhas:
+       CÓDIGO                                                                 PROCEDIMENTO       VALOR  Unnamed: 3 Unnamed: 4 Unnamed: 5  Unnamed: 6
+0  COD_EVENTO                                                                  DESC_EVENTO  R$_REPASSE         NaN  R$_EVENTO   R$_FATOR  R$_REPASSE
+1    10101012  CONSULTA  ELETIVA  EM  CONSULTÓRIO  NO  HORÁRIO NORMAL  OU  PREESTABELECIDO          73         NaN   R$ 99,00   R$ 26,00    R$ 73,00
+
+--- Aba: HAPVIDA_012023 ---
+Colunas: ['CÓDIGO', 'PROCEDIMENTO', 'VALOR']
+Primeiras 2 linhas:
+   CÓDIGO                         PROCEDIMENTO  VALOR
+0     NaN  SECIPE - TABELA DE HONORÁRIO MÉDICO    NaN
+1  CÓDIGO                         PROCEDIMENTO    NaN
+
+--- Aba: HAPVIDA_042025 ---
+Colunas: ['CÓDIGO', 'PROCEDIMENTO', 'VALOR', 'Unnamed: 3']
+Primeiras 2 linhas:
+   CÓDIGO                         PROCEDIMENTO  VALOR  Unnamed: 3
+0     NaN  SECIPE - TABELA DE HONORÁRIO MÉDICO    NaN         NaN
+1  CÓDIGO                         PROCEDIMENTO    NaN         NaN
+
+--- Aba: SANTA_CASA_012023 ---
+Colunas: ['CÓDIGO', 'PROCEDIMENTO', 'VALOR', 'Unnamed: 3', 'Unnamed: 4', 'Unnamed: 5']
+Primeiras 2 linhas:
+   CÓDIGO                       PROCEDIMENTO  VALOR  Unnamed: 3 Unnamed: 4 Unnamed: 5
+0     NaN  TABELA SECIPE DE HONORÁRIO MÉDICO    NaN         NaN   repetido  cod repet
+1  CÓDIGO                       PROCEDIMENTO    NaN  REFERÊNCIA        NaN        NaN
+
+--- Aba: UNIMED_INTERCAMBIO_112024 ---
+Colunas: ['CÓDIGO', 'PROCEDIMENTO', 'VALOR', 'Unnamed: 3', 'Unnamed: 4', 'Unnamed: 5', 'Unnamed: 6']
+Primeiras 2 linhas:
+                CÓDIGO             PROCEDIMENTO  VALOR               Unnamed: 3                      Unnamed: 4 Unnamed: 5 Unnamed: 6
+0  Código Procedimento  Descrição Procedimento     NaN  Código Interno Cadastro  Data Inicio de Vigência Valor     Val. CO  Val Filme
+1                10081     CONSULTA HOMEOPATICA  115.0                     1008             2023-10-01 00:00:00          0          0
+
+--- Aba: UNIMED_LOCAL_112024 ---
+Colunas: ['CÓDIGO', 'PROCEDIMENTO', 'VALOR', 'Unnamed: 3', 'Unnamed: 4', 'Unnamed: 5', 'Unnamed: 6', 'Unnamed: 7']
+Primeiras 2 linhas:
+                CÓDIGO                       PROCEDIMENTO  VALOR               Unnamed: 3                      Unnamed: 4      Unnamed: 5 Unnamed: 6 Unnamed: 7
+0  Código Procedimento            Descrição Procedimento     NaN  Código Interno Cadastro  Data Inicio de Vigência Valor   Val. Honorario    Val. CO  Val Filme
+1                10057  CONSULTA GAR I UMA (01) PATOLOGIA  113.0                     1005             2024-05-01 00:00:00             113          0          0
+
+--- Aba: VIA_ACESSO ---
+Colunas: ['CÓDIGO', 'PROCEDIMENTO', 'Via Acesso', 'excessão']
+Primeiras 2 linhas:
+     CÓDIGO                                                         PROCEDIMENTO     Via Acesso  excessão
+0        99                               USO DE EQUIPAMENTO PARA VIDEOCIRURGICA  compartilhada       NaN
+1  10101012  CONSULTA ELETIVA EM CONSULTORIO NO HORARIO NORMAL OU PREESTABELCIDO            NaN       NaN

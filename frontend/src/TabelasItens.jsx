@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { supabase } from './supabaseClient'
-import { Plus, Edit2, Trash2, ArrowLeft, Search, Save, X, AlertCircle } from 'lucide-react'
+import { Plus, Edit2, Trash2, ArrowLeft, Search, Save, X, AlertCircle, UploadCloud } from 'lucide-react'
+import Papa from 'papaparse'
 
 export default function TabelasItens({ tabelaId, convenioNome, onBack }) {
     const [itens, setItens] = useState([])
@@ -18,6 +19,60 @@ export default function TabelasItens({ tabelaId, convenioNome, onBack }) {
     })
     const [errorMsg, setErrorMsg] = useState('')
     const [saving, setSaving] = useState(false)
+    const [listErrorMsg, setListErrorMsg] = useState('')
+
+    const fileInputRef = useRef(null)
+    const [importLoading, setImportLoading] = useState(false)
+
+    const handleFileUpload = (e) => {
+        const file = e.target.files[0]
+        if (!file) return
+
+        setImportLoading(true)
+        setListErrorMsg('')
+
+        Papa.parse(file, {
+            header: true,
+            skipEmptyLines: true,
+            complete: async (results) => {
+                const data = results.data
+                if (data.length === 0) {
+                    setListErrorMsg('O arquivo CSV está vazio ou inválido.')
+                    setImportLoading(false)
+                    return
+                }
+
+                // Check for required columns
+                if (!data[0].hasOwnProperty('codigo') || !data[0].hasOwnProperty('descricao')) {
+                    setListErrorMsg('O CSV precisa ter as colunas "codigo" e "descricao". Verifique se salvou separado por vírgulas ou ponto e vírgula.')
+                    setImportLoading(false)
+                    return
+                }
+
+                const payloads = data.map(row => ({
+                    tabela_preco_id: tabelaId,
+                    codigo: String(row.codigo).trim(),
+                    descricao: String(row.descricao).trim(),
+                    valor: row.valor ? parseFloat(String(row.valor).replace(',', '.')) : 0.00
+                })).filter(p => p.codigo && p.descricao)
+
+                if (payloads.length > 0) {
+                    const { error } = await supabase.from('tabelas_preco_itens').upsert(payloads, { onConflict: 'tabela_preco_id,codigo' })
+                    if (error) {
+                        setListErrorMsg('Erro na importação: ' + error.message)
+                    } else {
+                        fetchItens() // refresh list
+                    }
+                }
+                setImportLoading(false)
+                e.target.value = null // reset input
+            },
+            error: (err) => {
+                setListErrorMsg('Erro ao ler CSV: ' + err.message)
+                setImportLoading(false)
+            }
+        })
+    }
 
     useEffect(() => {
         if (tabelaId) {
@@ -141,7 +196,23 @@ export default function TabelasItens({ tabelaId, convenioNome, onBack }) {
                         Tabela: <strong className="text-amber-400">{tabelaInfo?.nome_origem}</strong>
                     </p>
                 </div>
-                <div className="ml-auto">
+                <div className="ml-auto flex items-center space-x-3">
+                    <input
+                        type="file"
+                        accept=".csv"
+                        className="hidden"
+                        ref={fileInputRef}
+                        onChange={handleFileUpload}
+                    />
+                    <button
+                        onClick={() => fileInputRef.current?.click()}
+                        disabled={importLoading}
+                        className="flex items-center space-x-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg transition-colors disabled:opacity-50"
+                        title="Baixe o template em docs/Template_Importacao_Convenios.csv"
+                    >
+                        <UploadCloud size={20} />
+                        <span>{importLoading ? 'Importando...' : 'Importar CSV'}</span>
+                    </button>
                     <button
                         onClick={() => handleOpenModal()}
                         className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
@@ -151,6 +222,13 @@ export default function TabelasItens({ tabelaId, convenioNome, onBack }) {
                     </button>
                 </div>
             </div>
+
+            {listErrorMsg && (
+                <div className="mb-4 p-4 bg-red-500/10 border border-red-500/20 rounded-lg flex items-start space-x-3 text-red-500">
+                    <AlertCircle size={20} className="shrink-0 mt-0.5" />
+                    <span className="text-sm font-medium">{listErrorMsg}</span>
+                </div>
+            )}
 
             <div className="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden flex flex-col min-h-[500px]">
                 <div className="p-4 border-b border-slate-700 bg-slate-800/50 flex space-x-4">
