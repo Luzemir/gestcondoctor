@@ -49,40 +49,44 @@ export default function TabelasItens({ tabelaId, convenioNome, onBack }) {
                     return
                 }
 
-                // Dedup payloads via Map (keeps the last occurrence in the CSV)
-                const payloadsMap = new Map()
-                let duplicatesFound = 0
+                // Validar duplicidades estritas no CSV
+                const seenCodes = new Map()
+                const duplicateErrors = []
 
-                data.forEach(row => {
+                data.forEach((row, index) => {
                     if (row.codigo && row.descricao) {
                         const codeStr = String(row.codigo).trim()
-                        if (payloadsMap.has(codeStr)) {
-                            duplicatesFound++
+                        const rowNumber = index + 2 // +1 for 0-index, +1 for header row
+
+                        if (seenCodes.has(codeStr)) {
+                            const firstSeenRow = seenCodes.get(codeStr)
+                            duplicateErrors.push(`Código '${codeStr}' repetido nas linhas ${firstSeenRow} e ${rowNumber}`)
+                        } else {
+                            seenCodes.set(codeStr, rowNumber)
                         }
-                        payloadsMap.set(codeStr, {
-                            tabela_preco_id: tabelaId,
-                            codigo: codeStr,
-                            descricao: String(row.descricao).trim(),
-                            valor: row.valor ? parseFloat(String(row.valor).replace(',', '.')) : 0.00
-                        })
                     }
                 })
 
-                const payloads = Array.from(payloadsMap.values())
+                if (duplicateErrors.length > 0) {
+                    setListErrorMsg(`Falha na validação! Corrija as duplicidades na sua planilha antes de importar:\n- ${duplicateErrors.slice(0, 5).join('\n- ')}${duplicateErrors.length > 5 ? `\n...e mais ${duplicateErrors.length - 5} duplicações.` : ''}`)
+                    setImportLoading(false)
+                    e.target.value = null
+                    return
+                }
+
+                const payloads = data.map(row => ({
+                    tabela_preco_id: tabelaId,
+                    codigo: String(row.codigo).trim(),
+                    descricao: String(row.descricao).trim(),
+                    valor: row.valor ? parseFloat(String(row.valor).replace(',', '.')) : 0.00
+                })).filter(p => p.codigo && p.descricao)
 
                 if (payloads.length > 0) {
                     const { error } = await supabase.from('tabelas_preco_itens').upsert(payloads, { onConflict: 'tabela_preco_id,codigo' })
                     if (error) {
                         setListErrorMsg('Erro na importação: ' + error.message)
                     } else {
-                        if (duplicatesFound > 0) {
-                            setListErrorMsg(`Importação concluída. ${duplicatesFound} códigos duplicados no arquivo foram mesclados.`)
-                            // Apenas para mostrar um aviso não bloqueante, depois limpamos
-                            setTimeout(() => setListErrorMsg(''), 6000)
-                        } else {
-                            // Limpar qualquer erro antigo se sucesso 100%
-                            setListErrorMsg('')
-                        }
+                        setListErrorMsg('')
                         fetchItens() // refresh list
                     }
                 }
