@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
-import { FileText, Calendar, Plus, Edit2, Archive, Trash2, Save, AlertCircle, X, ArrowLeft } from 'lucide-react'
+import { FileText, Calendar, Plus, Edit2, Archive, Trash2, Save, AlertCircle, X, ArrowLeft, BookOpen } from 'lucide-react'
 import TabelasItens from './TabelasItens'
 
 export default function TabelasReferenciais() {
