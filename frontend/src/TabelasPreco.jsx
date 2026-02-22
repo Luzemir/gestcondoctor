@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
-import { FileText, Calendar, Plus, Edit2, Archive, ArrowLeft, X, Save, AlertCircle } from 'lucide-react'
+import { FileText, Calendar, Plus, Edit2, Archive, ArrowLeft, X, Save, AlertCircle, Copy, Trash2, Loader2 } from 'lucide-react'
 import TabelasItens from './TabelasItens'
 
 export default function TabelasPreco({ convenioId, onBack }) {
@@ -21,6 +21,7 @@ export default function TabelasPreco({ convenioId, onBack }) {
     })
     const [errorMsg, setErrorMsg] = useState('')
     const [saving, setSaving] = useState(false)
+    const [processingAction, setProcessingAction] = useState({ id: null, action: '' })
 
     // Session state to add required empresa_id to inserts
     const [empresaId, setEmpresaId] = useState(null)
@@ -152,6 +153,67 @@ export default function TabelasPreco({ convenioId, onBack }) {
         fetchTabelas()
     }
 
+    const handleDuplicate = async (tab) => {
+        if (!window.confirm(`Deseja realmente duplicar a tabela "${tab.nome_origem}" e todos os seus itens?`)) return
+        setProcessingAction({ id: tab.id, action: 'Duplicando...' })
+
+        try {
+            // 1. Criar nova tabela
+            const novaTabela = {
+                convenio_id: tab.convenio_id,
+                empresa_id: tab.empresa_id,
+                nome_origem: `${tab.nome_origem} (Cópia)`,
+                descricao: tab.descricao,
+                vigencia_inicio: new Date().toISOString().split('T')[0],
+                vigencia_fim: null,
+                status: 'Rascunho'
+            }
+
+            const { data: newTabObj, error: tabErr } = await supabase.from('tabelas_preco').insert([novaTabela]).select().single()
+            if (tabErr) throw tabErr
+
+            // 2. Buscar itens da antiga
+            const { data: itens, error: itensErr } = await supabase.from('tabelas_preco_itens').select('*').eq('tabela_preco_id', tab.id)
+            if (itensErr) throw itensErr
+
+            // 3. Inserir itens na nova (em lotes)
+            if (itens && itens.length > 0) {
+                const payloads = itens.map(i => ({
+                    tabela_preco_id: newTabObj.id,
+                    codigo: i.codigo,
+                    descricao: i.descricao,
+                    valor: i.valor
+                }))
+
+                const chunkSize = 500;
+                for (let i = 0; i < payloads.length; i += chunkSize) {
+                    const chunk = payloads.slice(i, i + chunkSize);
+                    const { error: insertErr } = await supabase.from('tabelas_preco_itens').insert(chunk)
+                    if (insertErr) console.error("Erro ao inserir lote", insertErr)
+                }
+            }
+            fetchTabelas()
+        } catch (err) {
+            alert('Erro ao duplicar: ' + err.message)
+        } finally {
+            setProcessingAction({ id: null, action: '' })
+        }
+    }
+
+    const handleDelete = async (tab) => {
+        if (!window.confirm(`ATENÇÃO: Deseja EXCLUIR permanentemente a tabela "${tab.nome_origem}" e todos os seus preços? Esta ação não pode ser desfeita.`)) return
+        setProcessingAction({ id: tab.id, action: 'Excluindo...' })
+        try {
+            const { error } = await supabase.from('tabelas_preco').delete().eq('id', tab.id)
+            if (error) throw error
+            fetchTabelas()
+        } catch (err) {
+            alert('Erro ao excluir: ' + err.message)
+        } finally {
+            setProcessingAction({ id: null, action: '' })
+        }
+    }
+
     if (selectedTabelaId) {
         return <TabelasItens tabelaId={selectedTabelaId} convenioNome={convenioNome} onBack={() => setSelectedTabelaId(null)} />
     }
@@ -235,14 +297,29 @@ export default function TabelasPreco({ convenioId, onBack }) {
                                             Gerenciar Itens
                                         </button>
                                     </td>
-                                    <td className="px-6 py-4 text-right space-x-3">
-                                        <button onClick={() => handleOpenModal(tab)} className="text-slate-400 hover:text-blue-400 transition-colors" title="Editar">
-                                            <Edit2 size={16} />
-                                        </button>
-                                        {tab.status !== 'Arquivada' && (
-                                            <button onClick={() => handleStatusChange(tab.id, 'Arquivada')} className="text-slate-400 hover:text-amber-400 transition-colors" title="Arquivar">
-                                                <Archive size={16} />
-                                            </button>
+                                    <td className="px-6 py-4 text-right space-x-3 whitespace-nowrap">
+                                        {processingAction.id === tab.id ? (
+                                            <div className="inline-flex items-center space-x-2 text-blue-400 text-sm">
+                                                <Loader2 size={16} className="animate-spin" />
+                                                <span>{processingAction.action}</span>
+                                            </div>
+                                        ) : (
+                                            <>
+                                                <button onClick={() => handleOpenModal(tab)} className="text-slate-400 hover:text-blue-400 transition-colors" title="Editar">
+                                                    <Edit2 size={16} />
+                                                </button>
+                                                <button onClick={() => handleDuplicate(tab)} className="text-slate-400 hover:text-emerald-400 transition-colors" title="Duplicar Tabela (+ Itens)">
+                                                    <Copy size={16} />
+                                                </button>
+                                                {tab.status !== 'Arquivada' && (
+                                                    <button onClick={() => handleStatusChange(tab.id, 'Arquivada')} className="text-slate-400 hover:text-amber-400 transition-colors" title="Arquivar">
+                                                        <Archive size={16} />
+                                                    </button>
+                                                )}
+                                                <button onClick={() => handleDelete(tab)} className="text-slate-400 hover:text-red-400 transition-colors" title="Excluir Definitivamente">
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            </>
                                         )}
                                     </td>
                                 </tr>
