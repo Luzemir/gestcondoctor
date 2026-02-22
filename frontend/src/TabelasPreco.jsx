@@ -204,8 +204,14 @@ export default function TabelasPreco({ convenioId, onBack }) {
         if (!window.confirm(`ATENÇÃO: Deseja EXCLUIR permanentemente a tabela "${tab.nome_origem}" e todos os seus preços? Esta ação não pode ser desfeita.`)) return
         setProcessingAction({ id: tab.id, action: 'Excluindo...' })
         try {
-            const { error } = await supabase.from('tabelas_preco').delete().eq('id', tab.id)
-            if (error) throw error
+            // First delete all items dependent on this table to prevent Foreign Key constraint error
+            const { error: itemsError } = await supabase.from('tabelas_preco_itens').delete().eq('tabela_preco_id', tab.id)
+            if (itemsError) throw new Error('Não foi possível excluir os itens da tabela: ' + itemsError.message)
+
+            // Then delete the table itself
+            const { error: tableError } = await supabase.from('tabelas_preco').delete().eq('id', tab.id)
+            if (tableError) throw tableError
+
             fetchTabelas()
         } catch (err) {
             alert('Erro ao excluir: ' + err.message)
