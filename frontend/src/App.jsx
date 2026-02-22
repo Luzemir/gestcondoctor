@@ -4,6 +4,7 @@ import Auth from './Auth'
 import Medicos from './Medicos'
 import Hospitais from './Hospitais'
 import Convenios from './Convenios'
+import TabelasReferenciais from './TabelasReferenciais'
 import {
     Users,
     Building2,
@@ -12,7 +13,8 @@ import {
     FilePlus,
     ClipboardList,
     LogOut,
-    ChevronRight
+    ChevronRight,
+    BookOpen
 } from 'lucide-react'
 
 function App() {
@@ -43,6 +45,7 @@ function App() {
         { id: 'medicos', label: 'Médicos', icon: Users },
         { id: 'hospitais', label: 'Hospitais', icon: Building2 },
         { id: 'convenios', label: 'Convênios', icon: ShieldCheck },
+        { id: 'tabelas_ref', label: 'Tabelas Referenciais', icon: BookOpen },
         { id: 'eventos', label: 'Eventos', icon: FilePlus, section: 'Faturamento' },
         { id: 'lotes', label: 'Lotes', icon: ClipboardList, section: 'Faturamento' },
     ]
@@ -124,6 +127,7 @@ function App() {
                 {activeTab === 'medicos' && <Medicos key={tabKey} />}
                 {activeTab === 'hospitais' && <Hospitais key={tabKey} />}
                 {activeTab === 'convenios' && <Convenios key={tabKey} />}
+                {activeTab === 'tabelas_ref' && <TabelasReferenciais key={tabKey} />}
                 {['eventos', 'lotes'].includes(activeTab) && (
                     <div className="flex flex-col items-center justify-center h-full text-slate-500">
                         <LayoutDashboard size={48} className="mb-4 opacity-20" />
