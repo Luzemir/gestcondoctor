@@ -18,6 +18,7 @@ import {
 function App() {
     const [session, setSession] = useState(null)
     const [activeTab, setActiveTab] = useState('dashboard')
+    const [tabKey, setTabKey] = useState(0)
 
     useEffect(() => {
         supabase.auth.getSession().then(({ data: { session } }) => {
@@ -58,10 +59,17 @@ function App() {
                         <React.Fragment key={item.id}>
                             {item.section && <div className="pt-6 pb-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest px-2">{item.section}</div>}
                             <button
-                                onClick={() => setActiveTab(item.id)}
+                                onClick={() => {
+                                    if (activeTab === item.id) {
+                                        setTabKey(prev => prev + 1) // Força o reset do componente se já estiver na tab
+                                    } else {
+                                        setActiveTab(item.id)
+                                        setTabKey(0)
+                                    }
+                                }}
                                 className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-all group ${activeTab === item.id
-                                        ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/40'
-                                        : 'text-slate-400 hover:bg-slate-700 hover:text-white'
+                                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/40'
+                                    : 'text-slate-400 hover:bg-slate-700 hover:text-white'
                                     }`}
                             >
                                 <div className="flex items-center space-x-3">
@@ -113,9 +121,9 @@ function App() {
                         </div>
                     </div>
                 )}
-                {activeTab === 'medicos' && <Medicos />}
-                {activeTab === 'hospitais' && <Hospitais />}
-                {activeTab === 'convenios' && <Convenios />}
+                {activeTab === 'medicos' && <Medicos key={tabKey} />}
+                {activeTab === 'hospitais' && <Hospitais key={tabKey} />}
+                {activeTab === 'convenios' && <Convenios key={tabKey} />}
                 {['eventos', 'lotes'].includes(activeTab) && (
                     <div className="flex flex-col items-center justify-center h-full text-slate-500">
                         <LayoutDashboard size={48} className="mb-4 opacity-20" />
