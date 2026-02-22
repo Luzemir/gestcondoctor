@@ -8,6 +8,7 @@ export default function TabelasItens({ tabelaId, convenioNome, onBack }) {
     const [loading, setLoading] = useState(true)
     const [tabelaInfo, setTabelaInfo] = useState(null)
     const [searchTerm, setSearchTerm] = useState('')
+    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
 
     // Modal State
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -107,6 +108,14 @@ export default function TabelasItens({ tabelaId, convenioNome, onBack }) {
         }
     }, [tabelaId])
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearchTerm(searchTerm)
+        }, 300)
+
+        return () => clearTimeout(timer)
+    }, [searchTerm])
+
     async function fetchTabelaInfo() {
         const { data } = await supabase
             .from('tabelas_preco')
@@ -200,8 +209,8 @@ export default function TabelasItens({ tabelaId, convenioNome, onBack }) {
     }
 
     const filteredItens = itens.filter(item =>
-        item.codigo.includes(searchTerm) ||
-        item.descricao.toLowerCase().includes(searchTerm.toLowerCase())
+        item.codigo.includes(debouncedSearchTerm) ||
+        item.descricao.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
     )
 
     return (
