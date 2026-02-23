@@ -19,6 +19,10 @@ export default function NovoEventoMedico() {
         paciente_nome: '',
         paciente_cpf: '',
         paciente_nascimento: '',
+        carteirinha: '',
+        guia: '',
+        senha: '',
+        atendimento: '',
         convenio_id: '',
         hospital_id: '',
         data_procedimento: new Date().toISOString().split('T')[0],
@@ -28,6 +32,8 @@ export default function NovoEventoMedico() {
         medico_principal_id: '',
         medico_aux1_id: '',
         medico_aux2_id: '',
+        anestesista: '',
+        instrumentador: '',
         observacoes_evento: '',
         observacoes_guia: ''
     })
@@ -77,8 +83,12 @@ export default function NovoEventoMedico() {
             tipo_evento: 'Procedimento Médico',
             status_operacional: itens.length > 0 ? 'Pronto' : 'Rascunho', // Logica inicial simplificada
             paciente_nome: formData.paciente_nome,
-            paciente_cpf: formData.paciente_cpf,
+            paciente_cpf: formData.paciente_cpf || null,
             paciente_nascimento: formData.paciente_nascimento || null,
+            carteirinha: formData.carteirinha || null,
+            guia: formData.guia || null,
+            senha: formData.senha || null,
+            atendimento: formData.atendimento || null,
             convenio_id: formData.convenio_id,
             hospital_id: formData.hospital_id,
             data_procedimento: formData.data_procedimento,
@@ -88,6 +98,8 @@ export default function NovoEventoMedico() {
             medico_principal_id: formData.medico_principal_id,
             medico_aux1_id: formData.medico_aux1_id || null,
             medico_aux2_id: formData.medico_aux2_id || null,
+            anestesista: formData.anestesista || null,
+            instrumentador: formData.instrumentador || null,
             observacoes_evento: formData.observacoes_evento,
             observacoes_guia: formData.observacoes_guia
         }
@@ -192,6 +204,58 @@ export default function NovoEventoMedico() {
                                 className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-blue-500 font-mono"
                             />
                         </div>
+
+                        {/* Campos Extras - Faturamento Tradicional */}
+                        <div className="space-y-1">
+                            <label className="text-sm font-medium text-slate-300">Carteirinha</label>
+                            <input
+                                type="text"
+                                name="carteirinha"
+                                placeholder="..."
+                                value={formData.carteirinha}
+                                onChange={handleChange}
+                                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-blue-500 font-mono"
+                            />
+                        </div>
+
+                        <div className="space-y-1">
+                            <label className="text-sm font-medium text-slate-300">Nº da Guia</label>
+                            <input
+                                type="text"
+                                name="guia"
+                                placeholder="..."
+                                value={formData.guia}
+                                onChange={handleChange}
+                                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-blue-500 font-mono"
+                            />
+                        </div>
+
+                        <div className="space-y-1">
+                            <label className="text-sm font-medium text-slate-300">Senha / Autorização</label>
+                            <input
+                                type="text"
+                                name="senha"
+                                placeholder="..."
+                                value={formData.senha}
+                                onChange={handleChange}
+                                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-blue-500 font-mono"
+                            />
+                        </div>
+
+                        <div className="space-y-1">
+                            <label className="text-sm font-medium text-slate-300">Atendimento</label>
+                            <input
+                                type="text"
+                                name="atendimento"
+                                placeholder="..."
+                                value={formData.atendimento}
+                                onChange={handleChange}
+                                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-blue-500 font-mono"
+                            />
+                        </div>
+
+                        {/* Separador Visual */}
+                        <div className="md:col-span-3 border-t border-slate-700/50 my-2"></div>
 
                         <div className="space-y-1 md:col-span-2">
                             <label className="text-sm font-medium text-slate-300">Convênio Faturado *</label>
@@ -320,6 +384,33 @@ export default function NovoEventoMedico() {
                                 <option value="">-- Opcional --</option>
                                 {medicos.filter(m => m.id !== formData.medico_principal_id && m.id !== formData.medico_aux1_id).map(m => <option key={m.id} value={m.id}>{m.nome}</option>)}
                             </select>
+                        </div>
+
+                        {/* Separador visual */}
+                        <div className="md:col-span-3 border-t border-slate-700/50 my-2"></div>
+
+                        <div className="space-y-1 md:col-span-1">
+                            <label className="text-sm font-medium text-slate-400">Anestesista (Texto)</label>
+                            <input
+                                type="text"
+                                name="anestesista"
+                                placeholder="..."
+                                value={formData.anestesista}
+                                onChange={handleChange}
+                                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-blue-500"
+                            />
+                        </div>
+
+                        <div className="space-y-1 md:col-span-1">
+                            <label className="text-sm font-medium text-slate-400">Instrumentador (Texto)</label>
+                            <input
+                                type="text"
+                                name="instrumentador"
+                                placeholder="..."
+                                value={formData.instrumentador}
+                                onChange={handleChange}
+                                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-blue-500"
+                            />
                         </div>
                     </div>
                 </div>
