@@ -87,8 +87,17 @@ export default function NovoEventoMedico() {
 
         setSaving(true)
 
+        // Busca do empresa_id armazenado no login/sessao do app MVP
+        const currentSession = JSON.parse(localStorage.getItem('sb-ptjxtovrrcbctoifosza-auth-token')) || null;
+        // Pega do metadata do uauário se existir, senão pega UUID genérico de fallback do MVP
+        let empresaId = 'cf9a7c5c-7b4d-49d6-8804-d510e1a1eeda'; // Fallback Padrão MVP 1
+        if (currentSession?.user?.user_metadata?.empresa_id) {
+            empresaId = currentSession.user.user_metadata.empresa_id;
+        }
+
         // 1. Inserir Evento PAI
         const eventoPayload = {
+            empresa_id: empresaId,
             tipo_evento: 'Procedimento Médico',
             status_operacional: itens.length > 0 ? 'Pronto' : 'Rascunho', // Logica inicial simplificada
             paciente_nome: formData.paciente_nome,
@@ -120,7 +129,17 @@ export default function NovoEventoMedico() {
             .single()
 
         if (errorEvento) {
-            setErrorMsg('Erro ao salvar cabeçalho do evento: ' + errorEvento.message)
+            console.error(errorEvento);
+            let userFriendlyMsg = 'Erro técnico desconhecido.';
+            if (errorEvento.message.includes('row-level security')) {
+                userFriendlyMsg = 'Você não tem permissão para salvar registros nesta empresa (Erro de Segurança RLS do Banco).';
+            } else if (errorEvento.message.includes('foreign key constraint')) {
+                userFriendlyMsg = 'Algum dos dados selecionados (Convênio, Hospital ou Médico) não é mais válido no sistema.';
+            } else {
+                userFriendlyMsg = `Falha do Banco de Dados: ${errorEvento.message}`
+            }
+
+            setErrorMsg(`Não foi possível salvar a ficha: ${userFriendlyMsg}`)
             setSaving(false)
             return
         }
@@ -128,6 +147,7 @@ export default function NovoEventoMedico() {
         // 2. Inserir Itens FILHO (se existirem)
         if (itens.length > 0) {
             const itensPayload = itens.map(item => ({
+                empresa_id: empresaId,
                 evento_id: eventoSalvo.id,
                 tabela_preco_id_snapshot: item.tabela_preco_id_snapshot,
                 codigo: item.codigo,

@@ -6,6 +6,7 @@ import Hospitais from './Hospitais'
 import Convenios from './Convenios'
 import TabelasReferenciais from './TabelasReferenciais'
 import NovoEventoMedico from './NovoEventoMedico'
+import Eventos from './Eventos'
 import {
     Users,
     Building2,
@@ -131,7 +132,8 @@ function App() {
                 {activeTab === 'convenios' && <Convenios key={tabKey} />}
                 {activeTab === 'tabelas_ref' && <TabelasReferenciais key={tabKey} />}
                 {activeTab === 'novo_evento_medico' && <NovoEventoMedico key={tabKey} />}
-                {['eventos', 'lotes'].includes(activeTab) && (
+                {activeTab === 'eventos' && <Eventos key={tabKey} />}
+                {['lotes'].includes(activeTab) && (
                     <div className="flex flex-col items-center justify-center h-full text-slate-500">
                         <LayoutDashboard size={48} className="mb-4 opacity-20" />
                         <p className="text-lg">Módulo de {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} em construção...</p>
