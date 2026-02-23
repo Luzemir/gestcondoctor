@@ -5,6 +5,7 @@ import Medicos from './Medicos'
 import Hospitais from './Hospitais'
 import Convenios from './Convenios'
 import TabelasReferenciais from './TabelasReferenciais'
+import NovoEventoMedico from './NovoEventoMedico'
 import {
     Users,
     Building2,
@@ -46,7 +47,8 @@ function App() {
         { id: 'hospitais', label: 'Hospitais', icon: Building2 },
         { id: 'convenios', label: 'Convênios', icon: ShieldCheck },
         { id: 'tabelas_ref', label: 'Tabelas Referenciais', icon: BookOpen },
-        { id: 'eventos', label: 'Eventos', icon: FilePlus, section: 'Faturamento' },
+        { id: 'novo_evento_medico', label: 'Procedimento Médico', icon: FilePlus, section: 'Novo Evento' },
+        { id: 'eventos', label: 'Eventos (Fila)', icon: ClipboardList, section: 'Faturamento' },
         { id: 'lotes', label: 'Lotes', icon: ClipboardList, section: 'Faturamento' },
     ]
 
@@ -128,6 +130,7 @@ function App() {
                 {activeTab === 'hospitais' && <Hospitais key={tabKey} />}
                 {activeTab === 'convenios' && <Convenios key={tabKey} />}
                 {activeTab === 'tabelas_ref' && <TabelasReferenciais key={tabKey} />}
+                {activeTab === 'novo_evento_medico' && <NovoEventoMedico key={tabKey} />}
                 {['eventos', 'lotes'].includes(activeTab) && (
                     <div className="flex flex-col items-center justify-center h-full text-slate-500">
                         <LayoutDashboard size={48} className="mb-4 opacity-20" />
