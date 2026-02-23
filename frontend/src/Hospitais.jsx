@@ -24,32 +24,14 @@ export default function Hospitais() {
     const [empresaId, setEmpresaId] = useState(null)
 
     useEffect(() => {
-        fetchSessionAndHospitais()
+        fetchHospitais()
     }, [])
 
-    async function fetchSessionAndHospitais() {
+    async function fetchHospitais() {
         setLoading(true)
-        const { data: { session } } = await supabase.auth.getSession()
-        if (session) {
-            const { data: userData } = await supabase
-                .from('usuarios_empresas')
-                .select('empresa_id')
-                .eq('email', session.user.email)
-                .single()
-
-            if (userData) {
-                setEmpresaId(userData.empresa_id)
-                fetchHospitais(userData.empresa_id)
-            }
-        }
-    }
-
-    async function fetchHospitais(empId) {
-        if (!empId) return
         const { data, error } = await supabase
             .from('hospitais')
             .select('*')
-            .eq('empresa_id', empId)
             .order('nome_fantasia', { ascending: true })
 
         if (error) {
@@ -114,6 +96,7 @@ export default function Hospitais() {
         setSaving(true)
         const payload = {
             empresa_id: empresaId,
+            nome: formData.nome_fantasia, // Backward compatibility with initial DB schema
             razao_social: formData.razao_social,
             nome_fantasia: formData.nome_fantasia,
             cnpj: formData.cnpj,
@@ -127,14 +110,14 @@ export default function Hospitais() {
             if (error) setFormError('Erro ao atualizar: ' + error.message)
             else {
                 setIsModalOpen(false)
-                fetchHospitais(empresaId)
+                fetchHospitais()
             }
         } else {
             const { error } = await supabase.from('hospitais').insert([payload])
             if (error) setFormError('Erro ao salvar: ' + error.message)
             else {
                 setIsModalOpen(false)
-                fetchHospitais(empresaId)
+                fetchHospitais()
             }
         }
         setSaving(false)
@@ -143,7 +126,7 @@ export default function Hospitais() {
     const handleArchive = async (id, currentStatus) => {
         const novoStatus = currentStatus === 'Arquivado' ? 'Ativo' : 'Arquivado'
         const { error } = await supabase.from('hospitais').update({ status: novoStatus }).eq('id', id)
-        if (!error) fetchHospitais(empresaId)
+        if (!error) fetchHospitais()
     }
 
     return (

@@ -26,33 +26,14 @@ export default function Medicos() {
     const [empresaId, setEmpresaId] = useState(null)
 
     useEffect(() => {
-        fetchSessionAndMedicos()
+        fetchMedicos()
     }, [])
 
-    async function fetchSessionAndMedicos() {
+    async function fetchMedicos() {
         setLoading(true)
-        const { data: { session } } = await supabase.auth.getSession()
-        if (session) {
-            // Buscando empresa_id vinculada ao email (lógica atual do MVP)
-            const { data: userData } = await supabase
-                .from('usuarios_empresas')
-                .select('empresa_id')
-                .eq('email', session.user.email)
-                .single()
-
-            if (userData) {
-                setEmpresaId(userData.empresa_id)
-                fetchMedicos(userData.empresa_id)
-            }
-        }
-    }
-
-    async function fetchMedicos(empId) {
-        if (!empId) return
         const { data, error } = await supabase
             .from('medicos')
             .select('*')
-            .eq('empresa_id', empId)
             .order('nome', { ascending: true })
 
         if (error) {
@@ -124,7 +105,7 @@ export default function Medicos() {
             if (error) setFormError('Erro ao atualizar: ' + error.message)
             else {
                 setIsModalOpen(false)
-                fetchMedicos(empresaId)
+                fetchMedicos()
             }
         } else {
             // Insert
@@ -132,7 +113,7 @@ export default function Medicos() {
             if (error) setFormError('Erro ao salvar: ' + error.message)
             else {
                 setIsModalOpen(false)
-                fetchMedicos(empresaId)
+                fetchMedicos()
             }
         }
         setSaving(false)
@@ -141,7 +122,7 @@ export default function Medicos() {
     const handleArchive = async (id, currentStatus) => {
         const novoStatus = currentStatus === 'Arquivado' ? 'Ativo' : 'Arquivado'
         const { error } = await supabase.from('medicos').update({ status: novoStatus }).eq('id', id)
-        if (!error) fetchMedicos(empresaId)
+        if (!error) fetchMedicos()
     }
 
     return (
