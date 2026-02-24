@@ -7,6 +7,7 @@ import Convenios from './Convenios'
 import TabelasReferenciais from './TabelasReferenciais'
 import NovoEventoMedico from './NovoEventoMedico'
 import Eventos from './Eventos'
+import Faturamento from './Faturamento'
 import {
     Users,
     Building2,
@@ -49,8 +50,8 @@ function App() {
         { id: 'convenios', label: 'Convênios', icon: ShieldCheck },
         { id: 'tabelas_ref', label: 'Tabelas Referenciais', icon: BookOpen },
         { id: 'novo_evento_medico', label: 'Procedimento Médico', icon: FilePlus, section: 'Novo Evento' },
-        { id: 'eventos', label: 'Eventos (Fila)', icon: ClipboardList, section: 'Faturamento' },
-        { id: 'lotes', label: 'Lotes', icon: ClipboardList, section: 'Faturamento' },
+        { id: 'eventos', label: 'Listagem de Cirurgias', icon: ClipboardList, section: 'Faturamento' },
+        { id: 'faturamento', label: 'Gerar Lotes TISS', icon: ClipboardList, section: 'Faturamento' },
     ]
 
     return (
@@ -133,12 +134,7 @@ function App() {
                 {activeTab === 'tabelas_ref' && <TabelasReferenciais key={tabKey} />}
                 {activeTab === 'novo_evento_medico' && <NovoEventoMedico key={tabKey} />}
                 {activeTab === 'eventos' && <Eventos key={tabKey} />}
-                {['lotes'].includes(activeTab) && (
-                    <div className="flex flex-col items-center justify-center h-full text-slate-500">
-                        <LayoutDashboard size={48} className="mb-4 opacity-20" />
-                        <p className="text-lg">Módulo de {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} em construção...</p>
-                    </div>
-                )}
+                {activeTab === 'faturamento' && <Faturamento key={tabKey} />}
             </main>
         </div>
     )

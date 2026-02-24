@@ -1,0 +1,4248 @@
+
+
+
+Private Sub 
+btn_producao_
+Click
+(
+)
+    '
+Call
+ 
+AdicionarProcedimento
+
+    
+Call
+ 
+CalcularIncisaoProcedimento
+
+    
+Call
+ 
+CalcularIncisaoTaxas
+
+    
+Call
+ 
+AtualizarResumoProducao
+
+   ' 
+Me.txt_
+descricao.SetFocus
+
+
+
+End SubPrivate Sub cmb_medicoaux1_
+Enter(
+)
+
+    Dim 
+ws
+ As Worksheet
+
+    Dim 
+tblMed
+ As 
+ListObject
+
+
+    Dim 
+nome
+ As Variant
+
+    Dim 
+i
+ As Long
+
+    Dim 
+medicoPrincipal
+ As String
+
+    Dim 
+dict
+ As Object
+
+
+
+    cmb_medicoaux1.Clear
+
+
+
+    
+medicoPrincipal
+ = Trim(
+cmb_
+medicoprincipal.Value
+
+)
+    
+If
+ 
+medicoPrincipal
+ = "" 
+Then
+
+        
+Exit
+ Sub ' Não preencher se médico principal estiver vazio
+
+    End If
+
+
+
+    Set 
+ws
+ = 
+wsListas
+
+
+    Set 
+tblMed
+ = 
+
+ws.ListObjects
+
+("
+Tab_Medico
+")
+
+    Set 
+dict
+ = 
+
+CreateObject
+(
+"
+Scripting.Dictionary
+")
+
+
+    ' Adiciona nomes únicos ao dicionário
+
+    For 
+i
+ = 1 To 
+
+tblMed.ListRows.Count
+
+
+
+        
+nome
+ = 
+Trim(
+
+tblMed.DataBodyRange
+(
+i
+, 1).Value)
+
+        If Len(
+nome
+) &gt; 0 And 
+nome
+ &lt;&gt; 
+medicoPrincipal
+ Then
+
+            If Not 
+
+dict.Exists
+
+(
+nome
+) Then
+
+                
+
+dict.Add
+
+ 
+nome
+, 
+nome
+
+
+            End If
+        
+End
+ 
+If
+
+    Next i
+
+    ' Preenche a combo com os nomes válidos
+
+    For Each 
+nome
+ In 
+
+dict.Keys
+
+
+
+        cmb_medicoaux1.AddItem 
+nome
+
+
+    Next 
+nome
+
+
+    
+
+    
+Me.txt_
+codigo.SetFocus
+
+
+
+
+
+End Sub
+
+
+
+Private Sub cmb_medicoaux2_
+Enter(
+)
+
+    Dim 
+ws
+ As Worksheet
+
+    Dim 
+tblMed
+ As 
+ListObject
+
+
+    Dim 
+nome
+ As Variant
+
+    Dim 
+i
+ As Long
+
+    Dim 
+medicoPrincipal
+ As String
+
+    Dim medicoAux1 As String
+
+    Dim 
+dict
+ As Object
+
+
+    cmb_medicoaux2.Clear
+
+    
+medicoPrincipal
+ = 
+Trim
+(
+cmb_
+medicoprincipal.Value
+
+)
+    medicoAux1 = 
+Trim
+(cmb_medicoaux1.Value)
+
+    
+If
+ 
+medicoPrincipal
+ = "" 
+Or
+ medicoAux1 = "" 
+Then
+
+        
+Exit
+ Sub ' Não preencher se algum dos anteriores estiver vazio
+
+    End If
+
+
+
+    Set 
+ws
+ = 
+wsListas
+
+
+    Set 
+tblMed
+ = 
+
+ws.ListObjects
+
+("
+Tab_Medico
+")
+
+    Set 
+dict
+ = 
+
+CreateObject
+(
+"
+Scripting.Dictionary
+")
+
+
+
+    For 
+i
+ = 1 To 
+
+tblMed.ListRows.Count
+
+
+
+        
+nome
+ = 
+Trim(
+
+tblMed.DataBodyRange
+(
+i
+, 1).Value)
+
+        If Len(
+nome
+) &gt; 0 And 
+nome
+ &lt;&gt; 
+medicoPrincipal
+ 
+And
+ 
+nome
+ &lt;&gt; medicoAux1 Then
+
+            If Not 
+
+dict.Exists
+
+(
+nome
+) Then
+
+                
+
+dict.Add
+
+ 
+nome
+, 
+nome
+
+
+            End If
+
+        End If
+
+    Next 
+i
+
+
+
+
+    For Each 
+nome
+ In 
+
+dict.Keys
+
+
+
+        cmb_medicoaux2.AddItem 
+nome
+
+
+    Next 
+nome
+
+
+End Sub
+
+
+
+
+
+
+
+Private Sub 
+cmb_tipo_
+Change
+(
+)
+
+    
+Me.ltb_
+producaomedica.Clear
+
+
+
+End Sub
+
+
+
+Private Sub 
+cmb_via_
+Exit
+(
+
+ByVal
+ Cancel As 
+MSForms.ReturnBoolean
+)
+
+    
+Me.cmb_
+via.Value
+
+ = 
+UCase
+(
+Me.cmb_via.Value
+)
+
+End Sub
+
+
+
+
+
+
+
+
+
+
+
+Private Sub 
+txt_paciente_
+Exit
+(
+
+ByVal
+ Cancel As 
+MSForms.ReturnBoolean
+)
+
+    With 
+Me.txt_paciente
+
+
+        
+.Value
+ = 
+UCase
+(.Value)
+
+        
+.
+TextAlign
+
+ = 
+fmTextAlignLeft
+
+
+        
+.
+SetFocus
+
+
+
+    End With
+
+    
+Me.txt_
+senha.SetFocus
+
+
+
+End Sub
+
+
+
+
+
+
+
+Private Sub 
+UserForm_
+Initialize
+(
+)
+    ' 
+POsição
+ do 
+Formulario
+
+    
+Me.StartUpPosition
+ = 0 'posição manual
+    
+Me.Top
+ = 2.4    ' Distância do topo da tela (em pontos)
+    
+Me.Left
+ = 2.4   ' Distância da borda esquerda da tela (em pontos)
+    ' dados do 
+formulario
+
+    
+Me.Width
+ = 875
+    
+Me.Height
+ = 580
+    ' Inicia todos os campos em branco
+
+    
+txt_
+data.Value
+
+ = ""
+
+    
+txt_
+hora.Value
+
+ = ""
+
+    
+cmb_
+tipo.Value
+
+ = ""
+
+    
+txt_
+carteirinha.Value
+
+ = ""
+
+    
+txt_
+guia.Value
+
+ = ""
+
+    
+txt_
+paciente.Value
+
+ = ""
+
+    
+txt_
+senha.Value
+
+ = ""
+
+    
+txt_
+atendimento.Value
+
+ = ""
+
+    
+cmb_
+convenio.Value
+
+ = ""
+
+    
+cmb_
+hospital.Value
+
+ = ""
+
+    
+cmb_
+medicoprincipal.Value
+
+ = ""
+
+    cmb_medicoaux1.Value = ""
+
+    cmb_medicoaux2.Value = ""
+
+    
+txt_
+anestesista.Value
+
+ = ""
+
+    
+txt_
+instrumentador.Value
+
+ = ""
+
+    
+txt_
+codigo.Value
+
+ = ""
+
+    
+txt_
+descricao.Value
+
+ = ""
+
+    '
+txt_
+valor.Value
+
+ = ""
+    'numerar o 
+formulario
+ com 
+codigo
+ 
+unico
+, aqui por hora está 
+aleatorio
+
+
+    
+lbl_num_
+unico.Caption
+
+ = "SCP" &amp; Format(Int((999999 - 100000 + 1) * 
+Rnd
+ + 100000), "000000")
+    
+lbl_tabela_convenio.Caption
+ = "Informe o Convênio"
+
+    
+Me.txt_
+valor.Value
+
+ = Format(0, "#,##0.00")
+
+
+
+    
+    ' Limpar 
+ListBoxes
+ também, se necessário
+    
+ltb_tabelaconvenio.Clear
+
+    
+ltb_producaomedica.Clear
+
+    
+    'formatação dos 
+txts
+
+    
+With
+ 
+cmb_tipo
+
+        .
+Clear
+
+        .
+Style
+ = 
+fmStyleDropDownList
+ ' impede digitação manual
+        .
+AddItem
+ "Eletiva"
+        .
+AddItem
+ "Urgência"
+        .
+ListIndex
+ = 0 ' seleciona "Eletiva" por padrão
+
+    End With
+
+    
+
+    With 
+cmb_via
+
+
+        
+.Clear
+
+        .
+Style
+ = 
+fmStyleDropDownList
+ ' impede digitação manual
+        .
+AddItem
+ "EXCLUSIVA"
+        .
+AddItem
+ "COMPARTILHADA"
+        '.
+ListIndex
+ = 0 ' VAZIO POR PADRÃO
+
+    End With
+
+    
+
+    Dim 
+ws
+ As Worksheet
+
+    Dim 
+tblConv
+ As 
+ListObject
+
+
+    Dim 
+tblHosp
+ As 
+ListObject
+
+
+    Dim 
+tblMed
+ As 
+ListObject
+
+
+    Dim 
+dict
+ As Object
+
+    Dim 
+i
+ As Long
+
+    Dim 
+nome
+ As String
+
+
+
+    Set 
+ws
+ = 
+ThisWorkbook.Sheets
+("
+Listas
+")
+
+
+    ' -------------------------
+    ' 
+ComboBox
+: Convênios
+    Set 
+tblConv
+ = 
+ws.ListObjects
+("
+Tab_Convenio_Vigencia
+")
+
+    Set 
+dict
+ = 
+
+CreateObject
+(
+"
+Scripting.Dictionary
+")
+
+
+
+    With 
+cmb_convenio
+
+
+        
+.Clear
+
+
+        For 
+i
+ = 1 To 
+
+tblConv.ListRows.Count
+
+
+
+            
+nome
+ = 
+Trim(
+
+tblConv.DataBodyRange
+(
+i
+, 1).Value)
+
+            If Len(
+nome
+) &gt; 0 And Not 
+
+dict.Exists
+
+(
+nome
+) Then
+
+                
+
+dict.Add
+
+ 
+nome
+, True
+
+                
+.
+AddItem
+
+ 
+nome
+
+
+            End If
+
+        Next 
+i
+
+
+    End With
+
+    Set 
+tblConv
+ = Nothing
+
+    Set 
+dict
+ = Nothing
+
+
+
+    ' -------------------------
+
+    ' 
+ComboBox
+: 
+Hospitais
+
+
+    Set 
+tblHosp
+ = 
+
+ws.ListObjects
+
+("
+Tab_Hospital
+")
+
+    Set 
+dict
+ = 
+
+CreateObject
+(
+"
+Scripting.Dictionary
+")
+
+
+
+    With 
+cmb_hospital
+
+
+        
+.Clear
+
+
+        For 
+i
+ = 1 To 
+
+tblHosp.ListRows.Count
+
+
+
+            
+nome
+ = 
+Trim(
+
+tblHosp.DataBodyRange
+(
+i
+, 1).Value)
+
+            If Len(
+nome
+) &gt; 0 And Not 
+
+dict.Exists
+
+(
+nome
+) Then
+
+                
+
+dict.Add
+
+ 
+nome
+, True
+
+                
+.
+AddItem
+
+ 
+nome
+
+
+            End If
+
+        Next 
+i
+
+
+    End With
+
+    Set 
+tblHosp
+ = Nothing
+
+    Set 
+dict
+ = Nothing
+
+
+    ' -------------------------
+    ' 
+ComboBoxes
+: Médicos
+
+' Percorre a tabela e armazena nomes únicos no dicionário
+
+    
+
+    Set 
+tblMed
+ = 
+
+ws.ListObjects
+
+("
+Tab_Medico
+")
+
+    Set 
+dict
+ = 
+
+CreateObject
+(
+"
+Scripting.Dictionary
+")
+
+    For 
+i
+ = 1 To 
+
+tblMed.ListRows.Count
+
+
+
+        
+nome
+ = 
+Trim(
+
+tblMed.DataBodyRange
+(
+i
+, 1).Value)
+
+        If Len(
+nome
+) &gt; 0 Then
+
+            If Not 
+
+dict.Exists
+
+(
+nome
+) Then 
+dict.Add
+ 
+nome
+, 
+nome
+
+
+        End If
+
+    Next 
+i
+
+
+    
+
+    For 
+i
+ = 1 To 
+
+tblMed.ListRows.Count
+
+
+
+        
+nome
+ = 
+Trim(
+
+tblMed.DataBodyRange
+(
+i
+, 1).Value)
+
+        If Len(
+nome
+) &gt; 0 Then
+            
+Me.cmb_medicoprincipal.AddItem
+ nome
+            Me.cmb_medicoaux1.AddItem nome
+
+            Me.cmb_medicoaux2.AddItem 
+nome
+
+
+        End If
+
+    Next 
+i
+
+
+    
+
+Set 
+tblMed
+ = Nothing
+
+Set 
+dict
+ = Nothing
+
+Set 
+ws
+ = Nothing
+
+
+
+End Sub
+
+
+
+'***********************
+' definições dos campos
+Private Sub 
+txt_data_Exit
+(
+ByVal
+ 
+Cancel
+ As 
+MSForms.ReturnBoolean
+)
+
+    Dim valor As String
+
+    valor = 
+Replace(
+
+txt_data.Value
+, "/", "")
+
+    
+    
+If
+ valor = "" 
+Then
+ 
+Exit
+ Sub ' Se vazio, não faz nada ainda
+    
+
+    If Len(valor) = 8 And 
+
+IsDate
+(
+Left(valor, 2) &amp; "/" &amp; Mid(valor, 3, 2) &amp; "/" &amp; Right(valor, 4)) Then
+
+        
+txt_
+data.Value
+
+ = Format(
+DateSerial
+(Right(valor, 4), Mid(valor, 3, 2), Left(valor, 2)), "dd/mm/
+yyyy
+")
+        
+txt_hora.SetFocus
+
+    Else
+
+        
+MsgBox
+ "Data inválida. Use o 
+formato
+ DDMMAAAA.", 
+vbExclamation
+
+
+        
+txt_
+data.Value
+
+ = ""
+
+        
+txt_
+hora.SetFocus
+
+
+
+        
+txt_
+data.SetFocus
+
+
+
+    End If
+
+    
+
+    If 
+Me.cmb_convenio
+ &lt;&gt; "" Then
+
+        Call 
+DefinirTabelaConvenio
+
+
+    End If
+
+    
+
+    
+
+    '------------------------
+    'ajustes das 
+listbox
+
+    
+With
+ 
+ltb_tabelaconvenio
+
+
+        
+.
+ColumnCount
+
+ = 4
+
+        
+.
+ColumnWidths
+
+ = "80pt;490pt;80pt;80pt"
+
+    End With
+
+    
+
+    With 
+ltb_producaomedica
+
+
+        
+.
+ColumnCount
+
+ = 8
+
+        
+.
+ColumnWidths
+
+ = "150pt; 40pt;  60pt;  40pt;  40pt;  250pt; 40pt;  150pt"
+
+    End With
+
+    
+
+    
+
+    
+
+End Sub
+
+
+
+Private Sub 
+txt_hora_
+Exit
+(
+
+ByVal
+ Cancel As 
+MSForms.ReturnBoolean
+)
+
+    Dim valor As String
+
+    valor = 
+Replace(
+
+txt_hora.Value
+, ":", "")
+
+    
+    
+If
+ valor = "" 
+Then
+ 
+Exit
+ Sub ' Se vazio, não faz nada ainda
+    
+
+    If Len(valor) = 4 Then
+
+        Dim h As Integer, m As Integer
+
+        h = 
+
+CInt
+(
+Left(valor, 2))
+
+        m = 
+
+CInt
+(
+Right(valor, 2))
+
+        
+
+        If h &gt;= 0 And h &lt;= 23 And m &gt;= 0 And m &lt;= 59 Then
+
+            
+txt_
+hora.Value
+
+ = Format(
+TimeSerial
+(h, m, 0), "
+hh:mm
+")
+
+            
+cmb_
+tipo.SetFocus
+
+
+
+        Else
+            
+MsgBox
+ "Hora inválida. Use o formato HHMM.", 
+vbExclamation
+
+
+            
+txt_
+hora.SetFocus
+
+
+
+        End If
+
+    Else
+        
+MsgBox
+ "Hora inválida. Use o formato HHMM.", 
+vbExclamation
+
+
+        
+txt_
+hora.SetFocus
+
+
+
+    End If
+
+End Sub
+
+
+Private Sub 
+DefinirTabelaConvenio
+()
+    
+Dim
+ ws As Worksheet
+    
+Dim
+ 
+tbl
+ As 
+ListObject
+
+    
+Dim
+ 
+dataReferencia
+ As Date
+    
+Dim
+ 
+melhorData
+ As Date
+    
+Dim
+ 
+nomeConvenio
+ As 
+String
+
+    
+Dim
+ linha As 
+ListRow
+
+    
+Dim
+ 
+tabelaResultado
+ As 
+String
+
+    
+Dim
+ 
+dataTabela
+ As Date
+    
+Dim
+ achou As 
+Boolean
+
+
+    ' Validar entrada
+
+    If Not 
+IsDate
+(
+txt_
+data.Value
+
+) Then
+        
+MsgBox
+ "Data inválida.", 
+vbExclamation
+
+        
+Exit
+ Sub
+
+    End If
+
+
+
+    If 
+cmb_
+convenio.ListIndex
+
+ = -1 Then
+        
+MsgBox
+ "Selecione um convênio.", 
+vbExclamation
+
+        
+Exit
+ Sub
+
+    End If
+
+
+
+    
+dataReferencia
+ = 
+CDate
+(
+txt_
+data.Value
+
+)
+    
+nomeConvenio
+ = 
+Trim
+(
+cmb_convenio.Value
+)
+
+
+    Set 
+ws
+ = 
+ThisWorkbook.Sheets
+("
+Listas
+")
+    Set 
+tbl
+ = 
+ws.ListObjects
+("
+Tab_Convenio_Vigencia
+")
+
+    
+melhorData
+ = #1/1/1900#
+    
+tabelaResultado
+ = ""
+    achou = False
+
+    For 
+Each
+ linha In 
+tbl.ListRows
+
+
+        If 
+Trim(
+
+linha.Range
+(1, 1).Value) = 
+nomeConvenio
+ Then
+            
+dataTabela
+ = 
+linha.Range
+(1, 2).
+Value
+
+            
+If
+ 
+dataTabela
+ &lt;= 
+dataReferencia
+ 
+And
+ 
+dataTabela
+ &gt; 
+melhorData
+ 
+Then
+
+                
+melhorData
+ = 
+dataTabela
+
+                
+tabelaResultado
+ = 
+linha.Range
+(1, 3).
+Value
+
+
+                
+achou
+ = True
+
+            End If
+
+        End If
+    Next linha
+
+    
+If
+ achou 
+Then
+
+        
+lbl_tabela_convenio.Caption
+ = 
+tabelaResultado
+
+    Else
+        
+lbl_tabela_convenio.Caption
+ = "Tabela não encontrada"
+
+    End If
+
+
+
+    ' 
+Limpeza
+
+
+    Set 
+tbl
+ = Nothing
+
+    Set 
+ws
+ = Nothing
+
+End Sub
+
+
+
+Private Sub 
+cmb_convenio_
+Change
+(
+)
+
+    If 
+Me.cmb_convenio
+ = "" Then
+
+        
+Me.lbl_tabela_
+convenio.Caption
+
+ = "Informe o 
+Convênio
+"
+
+    End If
+    
+Call
+ 
+DefinirTabelaConvenio
+
+    
+txt_codigo.Value
+ = ""
+
+    
+txt_
+descricao.Value
+
+ = ""
+
+    
+txt_
+valor.Value
+
+ = ""
+    
+Me.ltb_tabelaconvenio.Clear
+
+    
+Me.ltb_producaomedica.Clear
+
+    
+Call
+ 
+AtualizarResumoProducao
+
+   
+    
+
+End
+ Sub
+
+'##############################################################################3
+'procedimentos 
+sql
+, busca do valor do procedimento
+
+
+Private Sub 
+txt_codigo_
+Exit
+(
+
+ByVal
+ Cancel As 
+MSForms.ReturnBoolean
+)
+    ' Remove espaços e tabulações no início e fim
+
+    If 
+Trim(
+Replace(
+txt_codigo.Value
+, 
+vbTab
+, "")) &lt;&gt; "" Then
+
+        
+ltb_
+producaomedica.Clear
+
+
+
+        Call 
+OcultarLabelsMedicos
+
+
+        Call 
+BuscarProcedimento
+
+
+    End If
+
+End Sub
+
+
+
+Private Sub 
+txt_codigo_
+Change
+(
+)
+
+    
+txt_
+descricao.Value
+
+ = ""
+
+    
+cmb_
+via.Value
+
+ = ""
+
+    
+txt_
+valor.Value
+
+ = ""
+
+End Sub
+
+
+
+Sub 
+
+BuscarProcedimento
+(
+)
+
+    Dim 
+cn
+ As Object
+
+    Dim 
+rs
+ As Object
+
+    Dim 
+rsvia
+ As Object
+
+    Dim 
+strConexao
+ As String
+    
+Dim
+ 
+strSQL
+ As 
+String
+
+    
+Dim
+ 
+caminhoArquivo
+ As 
+String
+
+    
+Dim
+ 
+nomeAba
+ As 
+String
+
+    
+Dim
+ 
+codigoBusca
+ As 
+String
+
+
+    '
+caminhoArquivo
+ = "G:\Drives compartilhados\BPO FINANCEIRO\0299 - SECIPE CIRURGIA PEDIATRICA SS\Gestão RGO\Desenvolvimento\Tabela 
+Dev
+\Tabela Procedimentos.xlsx"
+    
+caminhoArquivo
+ = wsListas.ListObjects("Tab_Convenios_Caminho").DataBodyRange.Cells(1, 1).
+Value
+
+    
+Debug.Print
+ 
+caminhoArquivo
+
+    
+nomeAba
+ = 
+Trim
+(
+Replace
+(
+lbl_tabela_convenio.Caption
+, 
+vbCrLf
+, ""))
+    
+codigoBusca
+ = 
+Trim
+(
+txt_codigo.Value
+)
+
+
+    On Error 
+GoTo
+ 
+TrataErro
+
+
+
+
+    Set 
+cn
+ = 
+
+CreateObject
+(
+"
+ADODB.Connection
+")
+
+    Set 
+rs
+ = 
+
+CreateObject
+(
+"
+ADODB.Recordset
+")
+
+    Set 
+rsvia
+ = 
+
+CreateObject
+(
+"
+ADODB.Recordset
+")
+
+
+    
+strConexao
+ = "
+Provider
+=Microsoft.ACE.OLEDB.12.0;" &amp; _
+                 "Data 
+Source
+=" &amp; 
+caminhoArquivo
+ &amp; ";" &amp; _
+                 "
+Extended
+ Properties=""Excel 12.0 
+Xml;HDR
+=YES;IMEX=1"";"
+                 
+
+    ' Consulta Tabela dos Planos
+
+    '
+strSQL
+ = "SELECT * FROM [" &amp; 
+nomeAba
+ &amp; "$] WHERE 
+CStr
+([Código]) = '" &amp; 
+txt_
+codigo.Value
+
+ &amp; "'"
+
+    
+strSQL
+ = "SELECT * FROM [" &amp; 
+nomeAba
+ &amp; "$] WHERE [Código] = '" &amp; 
+txt_
+codigo.Value
+
+ &amp; "'"
+
+    '
+strSQL
+ = "SELECT * FROM [CASSEMS_112024$] WHERE [CÓDIGO] = '30101050'"
+    
+Debug.Print
+ "Nome da aba: " &amp; 
+nomeAba
+
+
+    
+Debug.Print
+ 
+strSQL
+
+
+    
+
+    
+
+cn.Open
+
+ 
+strConexao
+
+
+    
+
+rs.Open
+
+ 
+strSQL
+, 
+cn
+, 1, 1
+
+
+
+    If Not 
+rs.EOF
+ Then
+
+        
+txt_
+descricao.Value
+
+ = 
+rs.Fields
+("PROCEDIMENTO").Value
+
+        
+txt_
+valor.Value
+
+ = Format(
+rs.Fields
+("VALOR").Value, "#,##0.00")
+    Else
+        
+txt_descricao.Value
+ = "Procedimento não localizado"
+        
+txt_valor.Value
+ = ""
+    
+End
+ 
+If
+
+
+    ' Consulta Via de Acesso
+    
+nomeAba
+ = "
+Via_Acesso
+"
+    
+strSQL
+ = "SELECT * FROM [" &amp; 
+nomeAba
+ &amp; "$] WHERE 
+CStr
+([Código]) = '" &amp; 
+txt_codigo.Value
+ &amp; "'"
+   
+    '
+cn.Open
+ 
+strConexao
+
+
+    
+
+rsvia.Open
+
+ 
+strSQL
+, 
+cn
+, 1, 1
+
+
+
+    If Not 
+rsvia.EOF
+ Then
+
+        
+cmb_
+via.Value
+
+ = 
+UCase
+(
+rsvia.Fields
+("Via 
+Acesso
+").Value)
+
+    Else
+
+        
+cmb_
+via.Value
+
+ = ""
+
+    End If
+
+
+
+
+
+    
+
+rs.Close
+
+: Set 
+rs
+ = Nothing
+
+    
+
+rsvia.Close
+
+: Set 
+rsvia
+ = Nothing
+
+    
+
+cn.Close
+
+: Set 
+cn
+ = Nothing
+    
+Exit
+ Sub
+
+
+TrataErro
+:
+    
+MsgBox
+ "Erro ao buscar procedimento: " &amp; 
+Err.Description
+, 
+vbCritical
+
+
+    If Not 
+rs
+ Is Nothing Then If 
+
+rs.State
+
+ = 1 Then 
+rs.Close
+
+
+    If Not 
+rsvia
+ Is Nothing Then If 
+
+rsvia.State
+
+ = 1 Then 
+rsvia.Close
+
+
+    If Not 
+cn
+ Is Nothing Then If 
+
+cn.State
+
+ = 1 Then 
+cn.Close
+
+
+    Set 
+rs
+ = Nothing
+
+    Set 
+rsvia
+ = Nothing
+
+    Set 
+cn
+ = Nothing
+
+End Sub
+
+
+
+'########################################################
+'
+prencher
+ 
+listbox
+ dos procedimentos conforme a tabela de preços dos 
+convenios
+
+
+
+Private Sub 
+btn_producao_
+Click
+(
+)
+    '
+Call
+ 
+AdicionarProcedimento
+
+    
+Call
+ 
+CalcularIncisaoProcedimento
+
+    
+Call
+ 
+CalcularIncisaoTaxas
+
+    
+Call
+ 
+AtualizarResumoProducao
+
+   ' 
+Me.txt_descricao.SetFocus
+
+
+End Sub
+
+
+
+Private Sub 
+txt_valor_
+KeyDown
+(
+
+ByVal
+ 
+KeyCode
+ As 
+MSForms.ReturnInteger
+, 
+ByVal
+ Shift As Integer)
+
+    If 
+KeyCode
+ = 
+vbKeyReturn
+ Or 
+KeyCode
+ = 
+vbKeyTab
+ Then
+        
+KeyCode
+ = 0  ' Impede que 
+Enter
+ ou 
+Tab
+ insiram caracteres ou avancem o foco automaticamente
+
+        Call 
+AdicionarProcedimento
+
+
+        
+txt_
+codigo.SetFocus
+
+
+
+    End If
+
+End
+ Sub
+
+Sub 
+AdicionarProcedimento
+()
+
+    
+Dim
+ 
+codigo
+ As 
+String
+
+    
+Dim
+ 
+descricao
+ As 
+String
+
+    
+Dim
+ valor As Double
+
+    Dim 
+item(
+1 To 4) As String
+
+    Dim 
+i
+ As Long
+
+
+
+    ' 
+Validação
+
+
+    If Trim(
+txt_
+codigo.Value
+
+) = "" Or Trim(
+txt_descricao.Value
+) = "" Or Trim(
+txt_valor.Value
+) = "" Then
+        
+MsgBox
+ "Preencha todos os campos antes de adicionar.", 
+vbExclamation
+
+        
+Exit
+ Sub
+    
+End
+ 
+If
+
+
+    ' Captura e formata
+    
+codigo
+ = 
+txt_codigo.Value
+
+    
+descricao
+ = 
+txt_descricao.Value
+
+    via = 
+cmb_via.Value
+
+'    valor = 
+txt_valor
+
+    valor = 
+CDbl
+(
+Replace
+(
+txt_valor.Value
+, ".", "")) ' Remove pontos de milhar
+'    valor = 
+CDbl
+(
+Replace
+(valor, ",", "."))           ' Troca vírgula por ponto
+
+    ' Monta item
+    item(1) = 
+codigo
+
+    item(2) = 
+descricao
+
+    item(3) = via
+    item(4) = Format(valor, "#,##0.00")
+
+    ' Adiciona à 
+listbox
+
+    
+ltb_tabelaconvenio.AddItem
+
+    
+ltb_tabelaconvenio.List
+(
+ltb_tabelaconvenio.ListCount
+ - 1, 0) = item(1)
+    
+ltb_tabelaconvenio.List
+(
+ltb_tabelaconvenio.ListCount
+ - 1, 1) = item(2)
+    
+ltb_tabelaconvenio.List
+(
+ltb_tabelaconvenio.ListCount
+ - 1, 2) = item(3)
+    
+ltb_tabelaconvenio.List
+(
+ltb_tabelaconvenio.ListCount
+ - 1, 3) = item(4)
+
+    ' Ordenar por valor decrescente
+    
+Call
+ 
+OrdenarListBoxPorValor
+
+
+    ' Limpa os campos
+    
+txt_codigo.Value
+ = ""
+
+    
+txt_
+descricao.Value
+
+ = ""
+
+    
+cmb_
+via.Value
+
+ = ""
+
+    
+txt_
+valor.Value
+
+ = ""
+
+    '
+txt_
+codigo.SetFocus
+
+
+
+
+
+End Sub
+
+
+
+Sub 
+
+OrdenarListBoxPorValor
+(
+)
+
+    Dim 
+i
+ As Long, j As Long
+
+    Dim 
+temp(
+1 To 4) As String
+
+    Dim 
+valor_i
+ As Double, 
+valor_j
+ As Double
+
+
+
+    With 
+ltb_tabelaconvenio
+
+
+        ' Bubble sort reverso (
+maior
+ para 
+menor
+)
+
+        For 
+i
+ = 0 
+To .
+ListCount
+
+ - 2
+
+            For j = 
+i
+ + 1 
+To .
+ListCount
+
+ - 1
+
+                
+valor_i
+ = 
+
+CDbl
+(
+Replace(Replace(.List(
+i
+, 3), ".", ""), ",", "."))
+
+                
+valor_j
+ = 
+
+CDbl
+(
+Replace(Replace(.List(j, 3), ".", ""), ",", "."))
+
+
+                
+If
+ 
+valor_j
+ &gt; 
+valor_i
+ 
+Then
+
+                    ' Armazena todas as 4 colunas da linha i
+                    
+temp
+(1) = .
+List
+(i, 0)
+                    
+temp
+(2) = .
+List
+(i, 1)
+                    
+temp
+(3) = .
+List
+(i, 2)
+                    
+temp
+(4) = .
+List
+(i, 3)
+
+                    ' Copia a linha j para a linha i
+
+                    
+.List
+(
+i
+, 0) = .List(j, 0)
+
+                    
+.List
+(
+i
+, 1) = .List(j, 1)
+
+                    
+.List
+(
+i
+, 2) = .List(j, 2)
+
+                    
+.List
+(
+i
+, 3) = .List(j, 3)
+
+
+                    ' Coloca a linha i (temporária) na linha j
+
+                    
+.List
+(j, 0) = temp(1)
+
+                    
+.List
+(j, 1) = temp(2)
+
+                    
+.List
+(j, 2) = temp(3)
+
+                    
+.List
+(j, 3) = temp(4)
+
+                End If
+
+            Next j
+
+        Next 
+i
+
+
+    End With
+
+End Sub
+
+
+
+Private Sub 
+ltb_tabelaconvenio_
+DblClick
+(
+
+ByVal
+ Cancel As 
+MSForms.ReturnBoolean
+)
+    
+Dim
+ 
+linhaSelecionada
+ As 
+Long
+
+    
+Dim
+ resposta As 
+VbMsgBoxResult
+
+
+    ' Verifica se há uma linha selecionada
+    
+If
+ 
+ltb_tabelaconvenio.ListIndex
+ &gt;= 0 
+Then
+
+        
+linhaSelecionada
+ = 
+ltb_tabelaconvenio.ListIndex
+
+        resposta = 
+MsgBox
+("Deseja excluir a linha selecionada?", 
+vbYesNo
+ + 
+vbQuestion
+, "Confirmação")
+        
+If
+ resposta = 
+vbYes
+ 
+Then
+
+            
+ltb_tabelaconvenio.RemoveItem
+ 
+linhaSelecionada
+
+
+            
+ltb_
+producaomedica.Clear
+
+
+
+            Call 
+OcultarLabelsMedicos
+
+
+        End If
+
+    End If
+
+End Sub
+
+
+
+
+
+
+
+'#######################################################
+'regras do 
+negocio
+, conjunto de orientações que irão calcular o valor a receber
+
+
+Public
+ 
+Function
+ 
+TaxaExclusiva
+() As Variant
+    
+    ' ATENÇÃO: ESTE É O ÚNICO LUGAR PARA EDITAR ESTA LISTA DE CÓDIGOS REFERENTE A TAXAS.
+    
+TaxaExclusiva
+ = 
+Array
+("60098007", "10102019", "10101039", "1113", "5904", "5905", "5906", "5907", "373", "40902056", "40201163", "1504", "1505", "1506", "1507")
+
+
+End
+ 
+Function
+
+
+Sub 
+CalcularIncisaoTaxas
+()
+
+    
+Dim
+ i As 
+Long
+
+    
+Dim
+ 
+codigo
+ As 
+String
+
+    
+Dim
+ via As 
+String
+
+    
+Dim
+ 
+descricao
+ As 
+String
+
+    
+Dim
+ valor As Double
+    
+Dim
+ 
+Incisao
+ As Double
+    
+Dim
+ taxas As Variant
+    
+Dim
+ 
+linhaProd
+ As 
+Long
+
+
+    ' Define os códigos com 100% de incisão
+    taxas = 
+TaxaExclusiva
+()
+
+    ' Percorre a 
+ltb_tabelaconvenio
+ (convenio)
+    For i = 0 
+To
+ 
+ltb_tabelaconvenio.ListCount
+ - 1
+        medico = 
+Me.cmb_medicoprincipal.Value
+
+        
+codigo
+ = 
+Trim
+(
+ltb_tabelaconvenio.List
+(i, 0))
+        
+descricao
+ = 
+ltb_tabelaconvenio.List
+(i, 1)
+        via = 
+ltb_tabelaconvenio.List
+(i, 2)
+        valor = 
+CDbl
+(
+Replace
+(
+ltb_tabelaconvenio.List
+(i, 3), ".", ""))
+ '       valor = 
+CDbl
+(
+Replace
+(valor, ",", ".")) ' Converte para formato numérico real
+
+        ' Verifica se o código está na 
+array
+ taxas
+
+        If Not 
+
+IsError
+(
+
+Application.Match
+(
+codigo
+, 
+taxas
+, 0)) Then
+            
+Incisao
+ = 1 ' 100%
+
+            ' Adiciona a linha na 
+ltb_producaomedica
+ (
+producao
+)
+
+            
+ltb_
+producaomedica.AddItem
+
+
+
+            
+linhaProd
+ = 
+ltb_
+producaomedica.ListCount
+
+ - 1
+
+
+            
+ltb_producaomedica.List
+(
+linhaProd
+, 0) = medico ' Médico
+
+            
+ltb_
+producaomedica.List
+
+(
+linhaProd
+, 1) = "P"                        ' P/A
+            
+ltb_producaomedica.List
+(
+linhaProd
+, 2) = via                       ' Via
+            
+ltb_producaomedica.List
+(
+linhaProd
+, 3) = Format(
+Incisao
+, "0%")     ' Incisão
+            
+ltb_producaomedica.List
+(
+linhaProd
+, 4) = 
+codigo
+                    ' Código
+            
+ltb_producaomedica.List
+(
+linhaProd
+, 5) = 
+descricao
+                 ' Descrição
+            
+ltb_producaomedica.List
+(
+linhaProd
+, 6) = Format(valor * 
+Incisao
+, "#,##0.00") ' Valor
+
+            
+ltb_
+producaomedica.List
+
+(
+linhaProd
+, 7) = ""                        ' 
+Obs
+
+
+        End If
+
+    Next 
+i
+
+
+
+
+End Sub
+
+
+
+
+
+
+Sub 
+CalcularIncisaoProcedimento
+()
+    
+Dim
+ i As 
+Long
+
+    
+Dim
+ 
+codigo
+ As 
+String
+, via As 
+String
+, 
+descricao
+ As 
+String
+
+    
+Dim
+ valor As Double, 
+incisaoPrincipal
+ As Double
+    
+Dim
+ tipo As 
+String
+, 
+convenio_nome
+ As 
+String
+, 
+convenio_nome_comp
+ As 
+String
+
+    
+Dim
+ taxas As Variant, 
+maiorValor
+ As Double
+    
+Dim
+ 
+valorPrincipal
+ As Double
+    
+Dim
+ 
+maiorValorUsado
+ As 
+Boolean
+
+    
+    ' Limpa a produção para nova execução
+    
+ltb_producaomedica.Clear
+
+
+    ' Médicos e tipo
+
+    Dim principal As String, aux1 As String, aux2 As String
+
+    principal = Trim(
+cmb_
+medicoprincipal.Value
+
+)
+
+    aux1 = Trim(cmb_medicoaux1.Value)
+
+    aux2 = Trim(cmb_medicoaux2.Value)
+
+    
+tipo
+ = Trim(
+cmb_
+tipo.Value
+
+)
+    
+convenio_nome
+ = 
+LimparTexto
+(
+Trim
+(
+cmb_convenio.Value
+))
+
+    ' Códigos DE TAXAS com tratamento exclusivo, adicionados na 
+function
+,
+    taxas = 
+TaxaExclusiva
+()
+    
+    ' Descobrir maior valor da 
+listbox
+ (ignorando códigos de taxas)
+    For i = 0 
+To
+ 
+ltb_tabelaconvenio.ListCount
+ - 1
+        
+codigo
+ = 
+Trim
+(
+ltb_tabelaconvenio.List
+(i, 0))
+        
+        ' Ignora se o código for uma taxa
+
+        If 
+
+IsError
+(
+
+Application.Match
+(
+codigo
+, 
+taxas
+, 0)) Then
+
+            If 
+
+IsNumeric
+(
+
+ltb_tabelaconvenio.List
+(
+i
+, 3)) Then
+                valor = 
+ConverterValor
+(
+ltb_tabelaconvenio.List
+(i, 3))
+                
+If
+ valor &gt; 
+maiorValor
+ 
+Then
+ 
+maiorValor
+ = valor
+
+            End If
+
+        End If
+
+    Next 
+i
+
+
+
+    ' Processar cada procedimento
+    For i = 0 
+To
+ 
+ltb_tabelaconvenio.ListCount
+ - 1
+        
+codigo
+ = 
+Trim
+(
+ltb_tabelaconvenio.List
+(i, 0))
+        
+descricao
+ = 
+ltb_tabelaconvenio.List
+(i, 1)
+        via = 
+UCase
+(
+Trim
+(
+ltb_tabelaconvenio.List
+(i, 2)))
+        valor = 
+ConverterValor
+(
+ltb_tabelaconvenio.List
+(i, 3))
+        
+        ' Ignora se estiver na lista de taxas
+
+        If 
+
+IsError
+(
+
+Application.Match
+(
+codigo
+, 
+taxas
+, 0)) Then
+
+
+            'Regra especial: Para 
+unimed
+ 
+day
+ 
+clinic
+ 
+pagto
+ dobrado
+
+            If 
+LimparTexto
+(
+convenio_nome
+) = "UNIMED DAY CLINIC" Then
+                    
+incisaoPrincipal
+ = 
+CalcularIncisaoPrincipal
+(valor, 
+maiorValor
+, via, tipo, 
+maiorValorUsado
+)
+                    
+incisaoPrincipal
+ = 
+incisaoPrincipal
+ * 2 ' dobra para 200%
+                    
+valorPrincipal
+ = valor * 
+incisaoPrincipal
+
+                    
+Call
+ 
+AdicionarLinhaProducao
+(principal, "P", via, 
+incisaoPrincipal
+, 
+codigo
+, 
+descricao
+, valor)
+                
+                'calculo 
+padrao
+ para geral
+                Else
+                    
+incisaoPrincipal
+ = 
+CalcularIncisaoPrincipal
+(valor, 
+maiorValor
+, via, tipo, 
+maiorValorUsado
+)
+                    
+valorPrincipal
+ = valor * 
+incisaoPrincipal
+
+                    
+Call
+ 
+AdicionarLinhaProducao
+(principal, "P", via, 
+incisaoPrincipal
+, 
+codigo
+, 
+descricao
+, valor)
+
+            End If
+
+            
+GoTo
+ 
+Auxiliares
+
+
+        End If
+
+
+Auxiliares:
+        ' Ignora se estiver na lista de taxas
+
+        If 
+
+IsError
+(
+
+Application.Match
+(
+codigo
+, 
+taxas
+, 0)) Then
+
+            ' Auxiliar 1
+
+            If aux1 &lt;&gt; "" Then
+
+                Dim aux1Incisao As Double
+
+                If 
+convenio_nome
+ Like "*UNIMED*" And 
+tipo
+ = "
+Urgência
+" Then
+                        aux1Incisao = 1
+                    Else
+                        aux1Incisao = 0.3
+                
+End
+ 
+If
+
+                
+                
+Call
+ 
+AdicionarLinhaProducao
+(aux1, "A1", via, aux1Incisao, 
+codigo
+, 
+descricao
+, 
+valorPrincipal
+)
+
+            End If
+
+
+
+            ' Auxiliar 2
+
+            If aux2 &lt;&gt; "" Then
+
+                Dim aux2Incisao As Double
+
+                If 
+convenio_nome
+ Like "*UNIMED*" And 
+tipo
+ = "
+Urgência
+" Then
+
+                        aux1Incisao = 1
+
+                    Else
+
+                        aux1Incisao = 0.2
+
+                End If
+                
+Call
+ 
+AdicionarLinhaProducao
+(aux2, "A2", via, aux2Incisao, 
+codigo
+, 
+descricao
+, 
+valorPrincipal
+)
+
+            End If
+
+        End If
+
+    Next 
+i
+
+
+End Sub
+
+
+
+
+
+
+
+
+
+Private Function 
+
+ConverterValor
+(
+
+strValor
+ As String) As Double
+
+    
+ConverterValor
+ = 
+CDbl
+(
+strValor
+)
+
+    '
+ConverterValor
+ = 
+
+CDbl
+(
+Replace(
+strValor
+, ".", ","))
+
+    '
+ConverterValor
+ = 
+
+CDbl
+(
+Replace(
+ConverterValor
+, ".", ""))
+
+End Function
+
+
+
+Private Function 
+
+CalcularIncisaoPrincipal
+(
+valor As Double, 
+maiorValor
+ As Double, via As String, 
+tipo
+ As String, 
+ByRef
+ 
+maiorValorUsado
+ As Boolean) As Double
+
+    If valor = 
+maiorValor
+ And Not 
+maiorValorUsado
+ Then
+
+        
+maiorValorUsado
+ = True
+
+        If 
+tipo
+ = "
+Urgência
+" Then
+
+            
+CalcularIncisaoPrincipal
+ = 1.3
+
+        Else
+
+            
+CalcularIncisaoPrincipal
+ = 1
+
+        End If
+
+    Else
+
+        Select Case via
+            Case "EXCLUSIVA"
+                
+CalcularIncisaoPrincipal
+ = 
+IIf
+(tipo = "Urgência", 0.91, 0.7)
+            Case "COMPARTILHADA"
+                
+CalcularIncisaoPrincipal
+ = 
+IIf
+(tipo = "Urgência", 0.65, 0.5)
+            Case Else
+                
+MsgBox
+ "Via de Acesso, não encontrada. Condição obrigatória estar toda em maiúsculo.", 
+vbCritical
+
+
+                
+CalcularIncisaoPrincipal
+ = 0
+
+        End Select
+
+    End If
+
+End Function
+
+
+
+Private Sub 
+
+AdicionarLinhaProducao
+(
+medico As String, 
+tipo
+ As String, via As String, 
+fator
+ As Double, 
+codigo
+ As String, 
+descricao
+ As String, 
+valorBase
+ As Double)
+
+    Dim 
+linha
+ As Long
+
+    
+linha
+ = 
+ltb_
+producaomedica.ListCount
+
+
+
+    
+ltb_
+producaomedica.AddItem
+
+
+
+    With 
+ltb_producaomedica
+
+        .
+List
+(linha, 0) = medico
+        .
+List
+(linha, 1) = tipo
+        .
+List
+(linha, 2) = via
+        .
+List
+(linha, 3) = Format(fator, "0%")
+        .
+List
+(linha, 4) = 
+codigo
+
+        .
+List
+(linha, 5) = 
+descricao
+
+        .
+List
+(linha, 6) = Format(
+valorBase
+ * fator, "#,##0.00")
+
+        
+.List
+(
+linha
+, 7) = ""
+
+    End With
+
+End Sub
+
+
+
+Private Function 
+
+LimparTexto
+(
+txt As String) As String
+    
+Dim
+ t As 
+String
+
+
+    ' Substitui caracteres invisíveis comuns por espaço normal
+    t = 
+txt
+
+    t = 
+Replace
+(t, 
+Chr
+(160), " ")   ' Espaço não quebrável
+
+    t = 
+Replace(
+t, Chr(9), "")      ' 
+Tabulação
+
+    t = 
+Replace
+(t, 
+Chr
+(10), "")     ' Quebra de linha
+    t = 
+Replace
+(t, 
+Chr
+(13), "")     ' Retorno de carro
+
+    t = 
+
+Application.WorksheetFunction.Substitute
+
+(t, 
+ChrW
+(8203), "")   ' Zero-width space (
+caso
+ 
+raro
+)
+
+
+    ' Remove múltiplos espaços
+    t = 
+Application.WorksheetFunction.Trim
+(t)
+
+    ' Padroniza para maiúsculo
+    
+LimparTexto
+ = 
+UCase
+(t)
+
+End
+ 
+Function
+
+
+
+Sub 
+AtualizarResumoProducao
+()
+    
+Dim
+ i As 
+Long
+
+    
+Dim
+ 
+nomeMedico
+ As 
+String
+
+    
+Dim
+ tipo As 
+String
+
+    
+Dim
+ valor As Double
+    
+Dim
+ 
+totalPrincipal
+ As Double
+    
+Dim
+ totalAux1 As Double
+    
+Dim
+ totalAux2 As Double
+
+    ' Inicializa totais
+    
+totalPrincipal
+ = 0
+    totalAux1 = 0
+    totalAux2 = 0
+
+    ' Oculta todas as 
+labels
+ inicialmente
+    
+Call
+ 
+OcultarLabelsMedicos
+
+    
+    ' Percorre todas as linhas da produção
+
+    For i = 0 To 
+ltb_
+producaomedica.ListCount
+
+ - 1
+        
+nomeMedico
+ = 
+ltb_producaomedica.List
+(i, 0)
+        tipo = 
+ltb_producaomedica.List
+(i, 1)
+        
+        ' Conversão segura de valor (formato brasileiro)
+
+        valor = 
+
+CDbl
+(
+Replace(
+ltb_producaomedica.List
+(
+i
+, 6), ".", ""))
+
+
+
+        Select Case 
+tipo
+
+
+            Case "P"
+                
+lbl_medicoprincipal.Caption
+ = 
+nomeMedico
+
+                
+totalPrincipal
+ = 
+totalPrincipal
+ + valor
+            Case "A1"
+                lbl_medicoaux1.Caption = 
+nomeMedico
+
+                totalAux1 = totalAux1 + valor
+            Case "A2"
+                lbl_medicoaux2.Caption = 
+nomeMedico
+
+                totalAux2 = totalAux2 + valor
+        
+End
+ 
+Select
+
+    Next i
+
+    ' Atualiza 
+labels
+ apenas se houver valor
+
+    If 
+totalPrincipal
+ &gt; 0 Then
+
+        
+lbl_
+medicoprincipal.Visible
+
+ = True
+
+        
+lbl_medpr_
+valor.Visible
+
+ = True
+
+        
+lbl_medpr_
+valor.Caption
+
+ = Format(
+totalPrincipal
+, "#,##0.00")
+
+    End If
+
+
+
+    If totalAux1 &gt; 0 Then
+
+        lbl_medicoaux1.Visible = True
+
+        lbl_meda1_
+valor.Visible
+ = True
+
+        lbl_meda1_
+valor.Caption
+ = Format(totalAux1, "#,##0.00")
+
+    End If
+
+
+
+    If totalAux2 &gt; 0 Then
+
+        lbl_medicoaux2.Visible = True
+
+        lbl_meda2_
+valor.Visible
+ = True
+
+        lbl_meda2_
+valor.Caption
+ = Format(totalAux2, "#,##0.00")
+
+    End If
+
+
+    ' Sempre mostra total geral
+    
+lbl_valortotal.Caption
+ = Format(
+totalPrincipal
+ + totalAux1 + totalAux2, "#,##0.00")
+
+End
+ Sub
+
+Private Sub 
+OcultarLabelsMedicos
+()
+    ' Oculta e limpa os 
+captions
+ das 
+labels
+ relacionadas aos médicos
+
+    With Me
+
+        
+.
+lbl
+_medicoprincipal.Visible
+ = False
+
+        
+.
+lbl
+_medicoprincipal.Caption
+ = ""
+
+        
+.
+lbl
+_medpr_valor.Visible
+ = False
+
+        
+.
+lbl
+_medpr_valor.Caption
+ = ""
+
+        
+.lbl
+_medicoaux1.Visible = False
+
+        
+.lbl
+_medicoaux1.Caption = ""
+        .lbl_meda1_valor.Visible = False
+        .lbl_meda1_valor.Caption = ""
+
+        
+.lbl
+_medicoaux2.Visible = False
+
+        
+.lbl
+_medicoaux2.Caption = ""
+        .lbl_meda2_valor.Visible = False
+        .lbl_meda2_valor.Caption = ""
+
+        
+.
+lbl
+_valortotal.Caption
+ = "0,00"
+
+    End With
+
+End Sub
+'####################################################################################################33
+'funções dos 
+botoes
+
+Private Sub 
+btn_desistir_Click
+()
+    
+Dim
+ resposta As 
+VbMsgBoxResult
+
+    
+    resposta = 
+MsgBox
+("O formulário será fechado e todas as informações serão perdidas. Deseja realmente sair?", _
+                      
+vbYesNo
+ + 
+vbQuestion
+, "Confirmar saída")
+    
+    
+If
+ resposta = 
+vbYes
+ 
+Then
+
+        
+Unload
+ Me ' Fecha o formulário
+
+    End If
+
+End Sub
+
+
+
+
+
+Private Sub 
+btn_salvar_
+Click
+(
+)
+
+    Dim 
+ws
+ As Worksheet
+
+    Dim 
+i
+ As Long, 
+ultimaLinha
+ As Long, f As Long
+    
+Dim
+ 
+linhaDestino
+ As 
+Long
+
+    
+Dim
+ item As Variant
+    
+    ' Verifica se a 
+ListBox
+ está vazia
+    
+If
+ 
+ltb_producaomedica.ListCount
+ = 0 
+Then
+
+        
+MsgBox
+ "Sem dados a Salvar", 
+vbInformation
+, "Aviso"
+        
+Exit
+ Sub ' Interrompe a execução da macro
+    
+End
+ 
+If
+
+    
+    Set ws = 
+wsProducao
+
+    
+    ' Identifica a última linha com dados (assume que a coluna A sempre terá valor se preenchido)
+
+    
+ultimaLinha
+ = 
+wsProducao.Cells
+(
+
+ws.Rows.Count
+
+, "A").End(
+xlUp
+).Row
+    
+linhaDestino
+ = 
+ultimaLinha
+ + 1
+
+    ' Percorre os itens da 
+listbox
+ de produção médica
+
+    For i = 0 To 
+ltb_
+producaomedica.ListCount
+
+ - 1
+
+
+        
+With
+ ws
+            'Porção fixa do lançamento
+            .
+Cells
+(
+linhaDestino
+, 1).
+Value
+ = 
+ConverterTextoParaData
+(
+txt_data.Value
+)
+            .
+Cells
+(
+linhaDestino
+, 2).
+Value
+ = 
+txt_hora.Value
+
+            .
+Cells
+(
+linhaDestino
+, 3).
+Value
+ = 
+cmb_tipo.Value
+
+            .
+Cells
+(
+linhaDestino
+, 4).
+Value
+ = 
+txt_carteirinha.Value
+
+            .
+Cells
+(
+linhaDestino
+, 5).
+Value
+ = 
+txt_guia.Value
+
+            .
+Cells
+(
+linhaDestino
+, 6).
+Value
+ = 
+txt_senha.Value
+
+            .
+Cells
+(
+linhaDestino
+, 7).
+Value
+ = 
+txt_atendimento.Value
+
+            .
+Cells
+(
+linhaDestino
+, 8).
+Value
+ = 
+txt_paciente.Value
+
+            .
+Cells
+(
+linhaDestino
+, 9).
+Value
+ = 
+cmb_convenio.Value
+
+            .
+Cells
+(
+linhaDestino
+, 10).
+Value
+ = 
+cmb_hospital.Value
+
+            .
+Cells
+(
+linhaDestino
+, 25).
+Value
+ = 
+lbl_num_unico
+ ' 
+numero
+ do RGO
+            
+            'Porção 
+variavel
+ do lançamento
+            .
+Cells
+(
+linhaDestino
+, 11).
+Value
+ = 
+ltb_producaomedica.List
+(i, 0) ' Médico
+            .
+Cells
+(
+linhaDestino
+, 12).
+Value
+ = 
+ltb_producaomedica.List
+(i, 1) ' Cirurgião (Principal/Auxiliar)
+            .
+Cells
+(
+linhaDestino
+, 13).
+Value
+ = 
+ltb_producaomedica.List
+(i, 2) ' Via
+            .
+Cells
+(
+linhaDestino
+, 14).
+Value
+ = 
+ltb_producaomedica.List
+(i, 3) ' Incisão
+            .
+Cells
+(
+linhaDestino
+, 15).
+Value
+ = 
+ltb_producaomedica.List
+(i, 4) ' Código
+            .
+Cells
+(
+linhaDestino
+, 16).
+Value
+ = 
+ltb_producaomedica.List
+(i, 5) ' Descrição
+            .
+Cells
+(
+linhaDestino
+, 17).
+Value
+ = 
+ltb_producaomedica.List
+(i, 6) ' Valor a receber
+            .
+Cells
+(
+linhaDestino
+, 18).
+Value
+ = 0#   'valor da tabela
+            .
+Cells
+(
+linhaDestino
+, 23).
+Value
+ = 
+ltb_producaomedica.List
+(i, 7) ' Anotação
+            
+            'Principal e Auxiliares
+            Var = 
+Me.ltb_producaomedica.List
+(i, 1)
+
+            If 
+ltb_
+producaomedica.List
+
+(
+i
+, 1) = "P" Then .Cells(
+linhaDestino
+, 12).Value = "Principal"
+
+            If 
+ltb_
+producaomedica.List
+
+(
+i
+, 1) = "A1" Then .Cells(
+linhaDestino
+, 12).Value = "Auxiliar"
+
+            If 
+ltb_
+producaomedica.List
+
+(
+i
+, 1) = "A2" Then .Cells(
+linhaDestino
+, 12).Value = "Auxiliar2"
+
+            
+            ' valor original da tabela de preços
+
+            For f = 0 To 
+ltb_
+tabelaconvenio.ListCount
+
+ - 1
+                cod1 = 
+Trim
+(
+ltb_tabelaconvenio.List
+(f, 0))
+
+                cod2 = 
+ltb_
+producaomedica.List
+
+(
+i
+, 4)
+
+                
+
+                If 
+Trim(
+
+ltb_tabelaconvenio.List
+(f, 0)) = 
+ltb_producaomedica.List
+(
+i
+, 4) Then
+                    
+valorTabela
+ = 
+ltb_tabelaconvenio.List
+(f, 3)
+                    
+Cells
+(
+linhaDestino
+, 18).
+Value
+ = 
+ltb_tabelaconvenio.List
+(f, 3) ' coluna do valor original
+
+                End If
+
+            Next f
+
+
+
+        End With
+
+        
+        
+linhaDestino
+ = 
+linhaDestino
+ + 1
+    Next i
+    
+    
+Select
+ Case 
+cmb_convenio.Value
+
+        Case "CASSEMS"
+            
+Call
+ 
+ExportarParaCassemsSecipe
+
+    
+End
+ 
+Select
+
+    
+    
+MsgBox
+ "Dados salvos com sucesso na aba Produção!", 
+vbInformation
+
+    
+
+    Set 
+ws
+ = Nothing
+
+    
+
+    Unload Me
+
+    
+Form_
+producaomedica.Show
+
+
+
+    
+
+End Sub
+
+
+
+Private Sub 
+
+LimparFormulario
+(
+)
+    ' Campos fixos do formulário
+    
+txt_data.Value
+ = ""
+
+    
+txt_
+hora.Value
+
+ = ""
+
+    
+cmb_
+tipo.Value
+
+ = ""
+
+    
+txt_
+carteirinha.Value
+
+ = ""
+
+    
+txt_
+guia.Value
+
+ = ""
+
+    
+txt_
+senha.Value
+
+ = ""
+
+    
+txt_
+atendimento.Value
+
+ = ""
+
+    
+txt_
+paciente.Value
+
+ = ""
+
+    
+cmb_
+convenio.Value
+
+ = ""
+
+    
+cmb_
+hospital.Value
+
+ = ""
+    
+cmb_medicoprincipal
+ = ""
+    cmb_medicoaux1 = ""
+    cmb_medicoaux2 = ""
+    
+    ' Limpa a 
+ListBox
+ de produção médica
+    
+ltb_producaomedica.Clear
+
+    
+ltb_tabelaconvenio.Clear
+
+    
+    ' Se houver outros campos auxiliares, limpe aqui também
+        
+
+    ' 
+Etiquetas
+ e 
+rótulos
+
+    
+lbl_tabela_convenio.Caption
+ = "Informe o Convênio"
+    
+lbl_num_
+unico.Caption
+
+ = ""
+    
+    ' Define foco inicial (opcional)
+
+    
+txt_
+data.SetFocus
+
+
+
+End Sub
+

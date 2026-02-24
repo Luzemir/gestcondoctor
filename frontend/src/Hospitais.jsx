@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
-import { Plus, Edit2, Archive, Building2, Save, X, AlertCircle } from 'lucide-react'
+import { Plus, Edit2, Archive, Building2, Save, X, AlertCircle, Search } from 'lucide-react'
 
 export default function Hospitais() {
     const [hospitais, setHospitais] = useState([])
@@ -19,6 +19,9 @@ export default function Hospitais() {
     })
     const [formError, setFormError] = useState('')
     const [saving, setSaving] = useState(false)
+
+    // Search state
+    const [searchTerm, setSearchTerm] = useState('')
 
     // Session state
     const [empresaId, setEmpresaId] = useState(null)
@@ -93,6 +96,19 @@ export default function Hospitais() {
             return
         }
 
+        const isDuplicate = hospitais.find(h =>
+            (
+                h.nome_fantasia.toLowerCase() === formData.nome_fantasia.toLowerCase() ||
+                (formData.cnpj && h.cnpj === formData.cnpj)
+            ) &&
+            (!editingHospital || h.id !== editingHospital.id)
+        );
+
+        if (isDuplicate) {
+            setFormError('Já existe um hospital cadastrado com este Nome Fantasia ou CNPJ.');
+            return;
+        }
+
         setSaving(true)
         const payload = {
             empresa_id: empresaId,
@@ -139,13 +155,25 @@ export default function Hospitais() {
                     </h2>
                     <p className="text-slate-400 mt-2">Gerencie os hospitais onde os procedimentos médicos são realizados.</p>
                 </div>
-                <button
-                    onClick={() => handleOpenModal()}
-                    className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-lg shadow-blue-900/40"
-                >
-                    <Plus size={20} />
-                    <span>Novo Hospital</span>
-                </button>
+                <div className="flex flex-col sm:flex-row items-end sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
+                    <div className="relative w-full sm:w-64">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={18} />
+                        <input
+                            type="text"
+                            placeholder="Buscar por nome ou CNPJ..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="w-full bg-slate-800 border border-slate-700 text-white rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:border-blue-500 transition-colors"
+                        />
+                    </div>
+                    <button
+                        onClick={() => handleOpenModal()}
+                        className="w-full sm:w-auto flex justify-center items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-lg shadow-blue-900/40 shrink-0"
+                    >
+                        <Plus size={20} />
+                        <span>Novo Hospital</span>
+                    </button>
+                </div>
             </div>
 
             <div className="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden shadow-xl">
@@ -171,37 +199,43 @@ export default function Hospitais() {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-700/50">
-                                {hospitais.map((hosp) => (
-                                    <tr key={hosp.id} className="hover:bg-slate-700/30 transition-colors group">
-                                        <td className="px-6 py-4">
-                                            <div className="font-bold text-white text-lg">{hosp.nome_fantasia}</div>
-                                            <div className="text-slate-500 text-sm">ID: {hosp.id.substring(0, 8)}...</div>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <div className="text-slate-300 text-sm mb-1">{hosp.razao_social || 'Não informada'}</div>
-                                            <div className="text-slate-400 font-mono text-xs">{hosp.cnpj || 'Sem CNPJ'}</div>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <div className="text-slate-300">
-                                                {hosp.cidade ? `${hosp.cidade} - ${hosp.uf}` : 'Não informada'}
-                                            </div>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <span className={`px-2.5 py-1 rounded-full text-xs font-bold uppercase ${hosp.status === 'Ativo' ? 'bg-green-500/10 text-green-500 border border-green-500/20' : 'bg-slate-700 text-slate-400 border border-slate-600'
-                                                }`}>
-                                                {hosp.status}
-                                            </span>
-                                        </td>
-                                        <td className="px-6 py-4 text-right space-x-3">
-                                            <button onClick={() => handleOpenModal(hosp)} className="p-2 bg-slate-800 text-slate-400 rounded-lg hover:text-blue-400 border border-slate-700 hover:border-blue-900 transition-all opacity-0 group-hover:opacity-100" title="Editar">
-                                                <Edit2 size={16} />
-                                            </button>
-                                            <button onClick={() => handleArchive(hosp.id, hosp.status)} className="p-2 bg-slate-800 text-slate-400 rounded-lg hover:text-amber-400 border border-slate-700 hover:border-amber-900 transition-all opacity-0 group-hover:opacity-100" title={hosp.status === 'Arquivado' ? 'Desarquivar' : 'Arquivar'}>
-                                                <Archive size={16} />
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
+                                {hospitais
+                                    .filter(hosp =>
+                                        hosp.nome_fantasia.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                        (hosp.cnpj && hosp.cnpj.includes(searchTerm)) ||
+                                        (hosp.razao_social && hosp.razao_social.toLowerCase().includes(searchTerm.toLowerCase()))
+                                    )
+                                    .map((hosp) => (
+                                        <tr key={hosp.id} className="hover:bg-slate-700/30 transition-colors group">
+                                            <td className="px-6 py-4">
+                                                <div className="font-bold text-white text-lg">{hosp.nome_fantasia}</div>
+                                                <div className="text-slate-500 text-sm">ID: {hosp.id.substring(0, 8)}...</div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className="text-slate-300 text-sm mb-1">{hosp.razao_social || 'Não informada'}</div>
+                                                <div className="text-slate-400 font-mono text-xs">{hosp.cnpj || 'Sem CNPJ'}</div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className="text-slate-300">
+                                                    {hosp.cidade ? `${hosp.cidade} - ${hosp.uf}` : 'Não informada'}
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <span className={`px-2.5 py-1 rounded-full text-xs font-bold uppercase ${hosp.status === 'Ativo' ? 'bg-green-500/10 text-green-500 border border-green-500/20' : 'bg-slate-700 text-slate-400 border border-slate-600'
+                                                    }`}>
+                                                    {hosp.status}
+                                                </span>
+                                            </td>
+                                            <td className="px-6 py-4 text-right space-x-3">
+                                                <button onClick={() => handleOpenModal(hosp)} className="p-2 bg-slate-800 text-slate-400 rounded-lg hover:text-blue-400 border border-slate-700 hover:border-blue-900 transition-all opacity-0 group-hover:opacity-100" title="Editar">
+                                                    <Edit2 size={16} />
+                                                </button>
+                                                <button onClick={() => handleArchive(hosp.id, hosp.status)} className="p-2 bg-slate-800 text-slate-400 rounded-lg hover:text-amber-400 border border-slate-700 hover:border-amber-900 transition-all opacity-0 group-hover:opacity-100" title={hosp.status === 'Arquivado' ? 'Desarquivar' : 'Arquivar'}>
+                                                    <Archive size={16} />
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
                             </tbody>
                         </table>
                     </div>

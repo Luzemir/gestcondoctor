@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
-import { Plus, Edit2, Archive, Users, Save, X, AlertCircle } from 'lucide-react'
+import { Plus, Edit2, Archive, Users, Save, X, AlertCircle, Search } from 'lucide-react'
 
 export default function Medicos() {
     const [medicos, setMedicos] = useState([])
@@ -21,6 +21,9 @@ export default function Medicos() {
     })
     const [formError, setFormError] = useState('')
     const [saving, setSaving] = useState(false)
+
+    // Search state
+    const [searchTerm, setSearchTerm] = useState('')
 
     // Session state
     const [empresaId, setEmpresaId] = useState(null)
@@ -86,6 +89,17 @@ export default function Medicos() {
             return
         }
 
+        const isDuplicate = medicos.find(m =>
+            m.conselho_numero === formData.conselho_numero &&
+            m.conselho_uf === formData.conselho_uf &&
+            (!editingMedico || m.id !== editingMedico.id)
+        );
+
+        if (isDuplicate) {
+            setFormError(`Já existe um médico cadastrado com o conselho ${formData.conselho_tipo} ${formData.conselho_numero} - ${formData.conselho_uf}.`);
+            return;
+        }
+
         setSaving(true)
         const payload = {
             empresa_id: empresaId,
@@ -135,13 +149,25 @@ export default function Medicos() {
                     </h2>
                     <p className="text-slate-400 mt-2">Gerencie os médicos executantes que farão parte do faturamento.</p>
                 </div>
-                <button
-                    onClick={() => handleOpenModal()}
-                    className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-lg shadow-blue-900/40"
-                >
-                    <Plus size={20} />
-                    <span>Novo Médico</span>
-                </button>
+                <div className="flex flex-col sm:flex-row items-end sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
+                    <div className="relative w-full sm:w-64">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={18} />
+                        <input
+                            type="text"
+                            placeholder="Buscar por nome, CRM ou especialidade..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="w-full bg-slate-800 border border-slate-700 text-white rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:border-blue-500 transition-colors"
+                        />
+                    </div>
+                    <button
+                        onClick={() => handleOpenModal()}
+                        className="w-full sm:w-auto flex justify-center items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-lg shadow-blue-900/40 shrink-0"
+                    >
+                        <Plus size={20} />
+                        <span>Novo Médico</span>
+                    </button>
+                </div>
             </div>
 
             <div className="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden shadow-xl">
@@ -167,44 +193,50 @@ export default function Medicos() {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-700/50">
-                                {medicos.map((medico) => (
-                                    <tr key={medico.id} className="hover:bg-slate-700/30 transition-colors group">
-                                        <td className="px-6 py-4">
-                                            <div className="font-bold text-white text-lg">{medico.nome}</div>
-                                            <div className="text-slate-500 text-sm">ID: {medico.id.substring(0, 8)}...</div>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <div className="flex items-center space-x-2">
-                                                <span className="bg-slate-700 text-slate-300 px-2 py-1 rounded text-xs font-bold font-mono">
-                                                    {medico.conselho_tipo} {medico.conselho_uf}
+                                {medicos
+                                    .filter(medico =>
+                                        medico.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                        (medico.conselho_numero && medico.conselho_numero.includes(searchTerm)) ||
+                                        (medico.especialidade && medico.especialidade.toLowerCase().includes(searchTerm.toLowerCase()))
+                                    )
+                                    .map((medico) => (
+                                        <tr key={medico.id} className="hover:bg-slate-700/30 transition-colors group">
+                                            <td className="px-6 py-4">
+                                                <div className="font-bold text-white text-lg">{medico.nome}</div>
+                                                <div className="text-slate-500 text-sm">ID: {medico.id.substring(0, 8)}...</div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className="flex items-center space-x-2">
+                                                    <span className="bg-slate-700 text-slate-300 px-2 py-1 rounded text-xs font-bold font-mono">
+                                                        {medico.conselho_tipo} {medico.conselho_uf}
+                                                    </span>
+                                                    <span className="text-slate-300 font-mono">{medico.conselho_numero}</span>
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className="text-slate-300 mb-1">{medico.especialidade || 'Clínico Geral'}</div>
+                                                <div className="text-slate-500 text-xs">
+                                                    {medico.telefone && <span>{medico.telefone}</span>}
+                                                    {medico.telefone && medico.email && <span> • </span>}
+                                                    {medico.email && <span>{medico.email}</span>}
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <span className={`px-2.5 py-1 rounded-full text-xs font-bold uppercase ${medico.status === 'Ativo' ? 'bg-green-500/10 text-green-500 border border-green-500/20' : 'bg-slate-700 text-slate-400 border border-slate-600'
+                                                    }`}>
+                                                    {medico.status}
                                                 </span>
-                                                <span className="text-slate-300 font-mono">{medico.conselho_numero}</span>
-                                            </div>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <div className="text-slate-300 mb-1">{medico.especialidade || 'Clínico Geral'}</div>
-                                            <div className="text-slate-500 text-xs">
-                                                {medico.telefone && <span>{medico.telefone}</span>}
-                                                {medico.telefone && medico.email && <span> • </span>}
-                                                {medico.email && <span>{medico.email}</span>}
-                                            </div>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <span className={`px-2.5 py-1 rounded-full text-xs font-bold uppercase ${medico.status === 'Ativo' ? 'bg-green-500/10 text-green-500 border border-green-500/20' : 'bg-slate-700 text-slate-400 border border-slate-600'
-                                                }`}>
-                                                {medico.status}
-                                            </span>
-                                        </td>
-                                        <td className="px-6 py-4 text-right space-x-3">
-                                            <button onClick={() => handleOpenModal(medico)} className="p-2 bg-slate-800 text-slate-400 rounded-lg hover:text-blue-400 border border-slate-700 hover:border-blue-900 transition-all opacity-0 group-hover:opacity-100" title="Editar">
-                                                <Edit2 size={16} />
-                                            </button>
-                                            <button onClick={() => handleArchive(medico.id, medico.status)} className="p-2 bg-slate-800 text-slate-400 rounded-lg hover:text-amber-400 border border-slate-700 hover:border-amber-900 transition-all opacity-0 group-hover:opacity-100" title={medico.status === 'Arquivado' ? 'Desarquivar' : 'Arquivar'}>
-                                                <Archive size={16} />
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
+                                            </td>
+                                            <td className="px-6 py-4 text-right space-x-3">
+                                                <button onClick={() => handleOpenModal(medico)} className="p-2 bg-slate-800 text-slate-400 rounded-lg hover:text-blue-400 border border-slate-700 hover:border-blue-900 transition-all opacity-0 group-hover:opacity-100" title="Editar">
+                                                    <Edit2 size={16} />
+                                                </button>
+                                                <button onClick={() => handleArchive(medico.id, medico.status)} className="p-2 bg-slate-800 text-slate-400 rounded-lg hover:text-amber-400 border border-slate-700 hover:border-amber-900 transition-all opacity-0 group-hover:opacity-100" title={medico.status === 'Arquivado' ? 'Desarquivar' : 'Arquivar'}>
+                                                    <Archive size={16} />
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
                             </tbody>
                         </table>
                     </div>

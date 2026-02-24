@@ -678,6 +678,7 @@ Papéis sugeridos:
 - Evento Procedimento Médico (RGO) + anexos + selector
 - Snapshot de tabela/valores
 - Resumo por médico no rodapé (somente leitura)
+- **Nota Futura de Pré-Preenchimento**: Permitir na UI anexar documentos PDF da RGO *durante* a digitação inicial dos dados (Novo Evento), implementando Leitura Dinâmica (OCR) do arquivo PDF para auto-preenchimento acelerado dos formulários.
 
 ### MVP 2 — Faturamento
 - Tela Eventos (fila) com filtros, badges, checklist
