@@ -89,8 +89,7 @@ export default function NovoEventoMedico() {
 
         // Busca do empresa_id armazenado no login/sessao do app MVP
         const currentSession = JSON.parse(localStorage.getItem('sb-ptjxtovrrcbctoifosza-auth-token')) || null;
-        // Pega do metadata do uauário se existir, senão pega UUID genérico de fallback do MVP
-        let empresaId = 'cf9a7c5c-7b4d-49d6-8804-d510e1a1eeda'; // Fallback Padrão MVP 1
+        let empresaId = null;
         if (currentSession?.user?.user_metadata?.empresa_id) {
             empresaId = currentSession.user.user_metadata.empresa_id;
         }
@@ -147,7 +146,6 @@ export default function NovoEventoMedico() {
         // 2. Inserir Itens FILHO (se existirem)
         if (itens.length > 0) {
             const itensPayload = itens.map(item => ({
-                empresa_id: empresaId,
                 evento_id: eventoSalvo.id,
                 tabela_preco_id_snapshot: item.tabela_preco_id_snapshot,
                 codigo: item.codigo,
