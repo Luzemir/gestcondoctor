@@ -63,6 +63,23 @@ export default function Auth() {
                             Cadastrar
                         </button>
                     </div>
+
+                    <div className="text-center mt-4">
+                        <button
+                            type="button"
+                            onClick={async () => {
+                                if (!email) return alert('Por favor, digite seu e-mail no campo acima para resetar a senha.')
+                                setLoading(true)
+                                const { error } = await supabase.auth.resetPasswordForEmail(email)
+                                if (error) alert('Erro ao solicitar reset: ' + error.message)
+                                else alert('Confira sua caixa de entrada! Enviamos um link para redefinir sua senha.')
+                                setLoading(false)
+                            }}
+                            className="text-sm text-slate-400 hover:text-blue-400 focus:outline-none underline transition-colors"
+                        >
+                            Esqueci minha senha
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
