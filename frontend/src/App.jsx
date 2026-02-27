@@ -10,6 +10,8 @@ import Eventos from './Eventos'
 import Faturamento from './Faturamento'
 import MasterDashboard from './MasterDashboard'
 import MinhaEmpresa from './MinhaEmpresa'
+import NotasFiscais from './NotasFiscais'
+import GlosasRecursos from './GlosasRecursos'
 import {
     Users,
     Building2,
@@ -19,15 +21,20 @@ import {
     ClipboardList,
     LogOut,
     ChevronRight,
+    ChevronDown,
     BookOpen,
-    AlertCircle
+    AlertCircle,
+    FileText,
+    Scale
 } from 'lucide-react'
 
 function App() {
     const [session, setSession] = useState(null)
     const [userProfile, setUserProfile] = useState(null)
-    const [activeTab, setActiveTab] = useState('dashboard')
-    const [tabKey, setTabKey] = useState(0)
+    const [loading, setLoading] = useState(true)
+    const [activeTab, setActiveTab] = useState('dashboard') // aba selecionada
+    const [tabKey, setTabKey] = useState(0) // chave de refresh da aba
+    const [menuAberto, setMenuAberto] = useState('Cadastros') // grupo menu aberto
 
     useEffect(() => {
         supabase.auth.getSession().then(({ data: { session } }) => {
@@ -112,25 +119,35 @@ function App() {
 
     const isMaster = userProfile.role === 'master'
 
-    // Construção condicional do menu
     const menuItems = []
 
     if (isMaster) {
         menuItems.push({ id: 'master_dashboard', label: 'Painel Master', icon: ShieldCheck, section: 'Administração Global' })
     }
 
-    // Mesmo Sendo Master, ele pode navegar normalmente nas páginas para debug, mas com prioridade.
+    // Estrutura de Menu Agrupado
     menuItems.push(
-        { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, section: isMaster ? 'Área da Empresa' : null },
-        { id: 'medicos', label: 'Médicos', icon: Users },
-        { id: 'hospitais', label: 'Hospitais', icon: Building2 },
-        { id: 'convenios', label: 'Convênios', icon: ShieldCheck },
-        { id: 'tabelas_ref', label: 'Tabelas Referenciais', icon: BookOpen },
-        { id: 'novo_evento_medico', label: 'Procedimento Médico', icon: FilePlus, section: 'Novo Evento' },
+        { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, section: 'Cadastros' },
+        { id: 'medicos', label: 'Médicos', icon: Users, section: 'Cadastros' },
+        { id: 'hospitais', label: 'Hospitais', icon: Building2, section: 'Cadastros' },
+        { id: 'convenios', label: 'Convênios', icon: ShieldCheck, section: 'Cadastros' },
+        { id: 'tabelas_ref', label: 'Tabelas Referenciais', icon: BookOpen, section: 'Cadastros' },
+
+        { id: 'novo_evento_medico', label: 'Procedimento Médico', icon: FilePlus, section: 'Lançamentos' },
+
         { id: 'eventos', label: 'Listagem de Cirurgias', icon: ClipboardList, section: 'Faturamento' },
         { id: 'faturamento', label: 'Gerar Lotes TISS', icon: ClipboardList, section: 'Faturamento' },
+        { id: 'notas_fiscais', label: 'Régua de Recebíveis', icon: FileText, section: 'Faturamento' },
+        { id: 'recursos', label: 'Glosas e Recursos', icon: Scale, section: 'Faturamento' },
+
         { id: 'minha_empresa', label: 'Minha Clínica', icon: Building2, section: 'Configurações' }
     )
+
+    const groupedMenu = menuItems.reduce((acc, item) => {
+        if (!acc[item.section]) acc[item.section] = [];
+        acc[item.section].push(item);
+        return acc;
+    }, {});
 
     return (
         <div className="flex min-h-screen bg-slate-900 text-white font-sans">
@@ -145,31 +162,49 @@ function App() {
                     )}
                 </div>
 
-                <nav className="flex-1 px-4 space-y-2 mt-4 overflow-y-auto">
-                    {menuItems.map((item) => (
-                        <React.Fragment key={item.id}>
-                            {item.section && <div className="pt-6 pb-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest px-2">{item.section}</div>}
+                <nav className="flex-1 px-4 space-y-2 mt-4 overflow-y-auto w-full scrollbar-thin scrollbar-thumb-slate-700">
+                    {Object.entries(groupedMenu).map(([section, items]) => (
+                        <div key={section} className="mb-2">
+                            {/* Botão Grupo */}
                             <button
-                                onClick={() => {
-                                    if (activeTab === item.id) {
-                                        setTabKey(prev => prev + 1)
-                                    } else {
-                                        setActiveTab(item.id)
-                                        setTabKey(0)
-                                    }
-                                }}
-                                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-all group ${activeTab === item.id
-                                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/40'
-                                    : 'text-slate-400 hover:bg-slate-700 hover:text-white'
-                                    }`}
+                                onClick={() => setMenuAberto(menuAberto === section ? null : section)}
+                                className="w-full flex items-center justify-between px-2 py-3 text-xs font-bold text-slate-500 hover:text-slate-300 uppercase tracking-wider transition-colors"
                             >
-                                <div className="flex items-center space-x-3">
-                                    <item.icon size={20} />
-                                    <span className="font-medium">{item.label}</span>
-                                </div>
-                                {activeTab === item.id && <ChevronRight size={16} />}
+                                <span>{section}</span>
+                                {menuAberto === section ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
                             </button>
-                        </React.Fragment>
+
+                            {/* Itens do Grupo Animados */}
+                            <div className={`overflow-hidden transition-all duration-300 ${menuAberto === section ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                <div className="space-y-1 mt-1 pl-3 border-l-2 border-slate-700/50 ml-2">
+                                    {items.map((item) => {
+                                        const isActive = activeTab === item.id;
+                                        return (
+                                            <button
+                                                key={item.id}
+                                                onClick={() => {
+                                                    if (isActive) {
+                                                        setTabKey(prev => prev + 1)
+                                                    } else {
+                                                        setActiveTab(item.id)
+                                                        setTabKey(0)
+                                                    }
+                                                }}
+                                                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-all group ${isActive
+                                                    ? 'bg-blue-600/20 text-blue-400 font-bold border border-blue-500/30'
+                                                    : 'text-slate-400 hover:bg-slate-700/40 hover:text-slate-200'
+                                                    }`}
+                                            >
+                                                <div className="flex items-center space-x-3">
+                                                    <item.icon size={18} className={isActive ? 'text-blue-400' : 'text-slate-500 group-hover:text-slate-400'} />
+                                                    <span className={isActive ? 'font-bold' : 'font-medium'}>{item.label}</span>
+                                                </div>
+                                            </button>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                        </div>
                     ))}
                 </nav>
 
@@ -221,7 +256,9 @@ function App() {
                 {activeTab === 'tabelas_ref' && <TabelasReferenciais key={tabKey} />}
                 {activeTab === 'novo_evento_medico' && <NovoEventoMedico key={tabKey} />}
                 {activeTab === 'eventos' && <Eventos key={tabKey} />}
-                {activeTab === 'faturamento' && <Faturamento key={tabKey} />}
+                {activeTab === 'faturamento' && <Faturamento key={tabKey} initialTab="fila" />}
+                {activeTab === 'notas_fiscais' && <NotasFiscais key={tabKey} />}
+                {activeTab === 'recursos' && <GlosasRecursos key={tabKey} />}
                 {activeTab === 'minha_empresa' && <MinhaEmpresa key={tabKey} userProfile={userProfile} />}
             </main>
         </div>

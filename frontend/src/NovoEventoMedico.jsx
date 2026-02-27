@@ -62,6 +62,9 @@ export default function NovoEventoMedico({ idEditar = null, modo = 'create', onC
     // Tabela Vigente
     const [tabelaVigente, setTabelaVigente] = useState(null)
 
+    // Timeline de Faturamento
+    const [timelineData, setTimelineData] = useState(null)
+
     useEffect(() => {
         fetchSupportData()
     }, [])
@@ -143,6 +146,15 @@ export default function NovoEventoMedico({ idEditar = null, modo = 'create', onC
                     }
                 }
                 setItens(uniqueItens)
+            }
+
+            // 3. Buscar Rastreabilidade de Lote se existir
+            if (eventoDb.faturamento_lote_id) {
+                const { data: loteData } = await supabase.from('faturamento_lotes').select('*').eq('id', eventoDb.faturamento_lote_id).single();
+                if (loteData) {
+                    const { data: nfData } = await supabase.from('notas_fiscais').select('*').eq('faturamento_lote_id', eventoDb.faturamento_lote_id).order('created_at', { ascending: false }).limit(1).maybeSingle();
+                    setTimelineData({ lote: loteData, nf: nfData });
+                }
             }
 
         } catch (error) {
@@ -485,8 +497,8 @@ export default function NovoEventoMedico({ idEditar = null, modo = 'create', onC
     // MOTOR DE HONORÁRIOS (Opção C)
     const itensCalculados = React.useMemo(() => {
         const principal = medicos.find(m => m.id === formData.medico_principal_id) || { nome: 'Cirurgião Principal' };
-        const aux1 = medicos.find(m => m.id === formData.medico_aux1_id);
-        const aux2 = medicos.find(m => m.id === formData.medico_aux2_id);
+        const aux1 = formData.medico_aux1_id ? medicos.find(m => m.id === formData.medico_aux1_id) : null;
+        const aux2 = (formData.medico_aux2_id && formData.medico_aux2_id !== formData.medico_aux1_id) ? medicos.find(m => m.id === formData.medico_aux2_id) : null;
         const convenio = convenios.find(c => c.id === formData.convenio_id) || { nome: '' };
 
         // 1. Encontrar o procedimento de maior valor (para bônus e base dos auxiliares)
@@ -521,7 +533,7 @@ export default function NovoEventoMedico({ idEditar = null, modo = 'create', onC
                     papel: 'P',
                     via_acesso: item.via_acesso,
                     incisao_percent: 100,
-                    valor_calculado: valorPrincipal
+                    valor_calculado: Number(valorPrincipal.toFixed(2))
                 });
             } else {
                 const isUnimedDayClinic = convenio.nome.toUpperCase().includes('UNIMED DAY CLINIC');
@@ -563,7 +575,7 @@ export default function NovoEventoMedico({ idEditar = null, modo = 'create', onC
                     papel: 'P',
                     via_acesso: item.via_acesso,
                     incisao_percent: Number((incisaoPrincipal * 100).toFixed(0)),
-                    valor_calculado: valorPrincipal
+                    valor_calculado: Number(valorPrincipal.toFixed(2))
                 });
 
                 // Lógica dos Auxiliares
@@ -582,7 +594,7 @@ export default function NovoEventoMedico({ idEditar = null, modo = 'create', onC
                         papel: 'A1',
                         via_acesso: item.via_acesso,
                         incisao_percent: Number((effectiveAux1Percent * 100).toFixed(0)),
-                        valor_calculado: valorBase * effectiveAux1Percent
+                        valor_calculado: Number((valorBase * effectiveAux1Percent).toFixed(2))
                     });
                 }
 
@@ -601,7 +613,7 @@ export default function NovoEventoMedico({ idEditar = null, modo = 'create', onC
                         papel: 'A2',
                         via_acesso: item.via_acesso,
                         incisao_percent: Number((effectiveAux2Percent * 100).toFixed(0)),
-                        valor_calculado: valorBase * effectiveAux2Percent
+                        valor_calculado: Number((valorBase * effectiveAux2Percent).toFixed(2))
                     });
                 }
             }
@@ -1164,6 +1176,62 @@ export default function NovoEventoMedico({ idEditar = null, modo = 'create', onC
                     )}
                 </div>
 
+                {/* BLOCO 5: RASTREABILIDADE E TIMELINE DE FATURAMENTO */}
+                {idEditar && (
+                    <div className="bg-slate-800 rounded-xl border border-slate-700 p-6 shadow-xl">
+                        <h3 className="text-xl font-bold text-white mb-6 border-b border-slate-700 pb-2 flex items-center">
+                            <ArrowRight className="text-amber-500 mr-2" size={24} />
+                            5. Rastreio e Timeline do Faturamento
+                        </h3>
+
+                        {!timelineData ? (
+                            <div className="p-8 bg-slate-900/50 rounded-xl border border-dashed border-slate-700 text-center">
+                                <p className="text-slate-400 font-medium tracking-wide">— RGO na Fila de Auditoria —</p>
+                                <p className="text-xs text-slate-500 mt-2">Aguardando o setor administrativo acoplar este procedimento em um Lote de Envio.</p>
+                            </div>
+                        ) : (
+                            <div className="relative border-l-2 border-slate-700 ml-4 space-y-8 py-4">
+                                {/* Evento 1: Lançamento */}
+                                <div className="relative pl-8">
+                                    <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-emerald-500 ring-4 ring-slate-800"></div>
+                                    <h4 className="font-bold text-emerald-400">Procedimento Preparado e Auditado</h4>
+                                    <p className="text-slate-400 text-sm mt-1">Lançado e precificado segundo a tabela vigente do convênio.</p>
+                                </div>
+
+                                {/* Evento 2: Lote */}
+                                <div className="relative pl-8">
+                                    <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-blue-500 ring-4 ring-slate-800"></div>
+                                    <h4 className="font-bold text-blue-400">Lote de Cobrança Gerado</h4>
+                                    <p className="text-slate-300 text-sm mt-1 whitespace-pre-wrap">A secretaria conferiu as guias e as anexou ao Lote de envio <span className="text-white font-mono bg-slate-700 px-1 rounded">{timelineData.lote.codigo_lote}</span>.</p>
+                                    <p className="text-slate-500 text-xs mt-1">Expedido em: {new Date(timelineData.lote.created_at).toLocaleDateString('pt-BR')}</p>
+                                </div>
+
+                                {/* Evento 3: NF e Régua */}
+                                <div className={`relative pl-8 ${!timelineData.nf ? 'opacity-30' : ''}`}>
+                                    <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-amber-500 ring-4 ring-slate-800"></div>
+                                    <h4 className="font-bold text-amber-500">{timelineData.nf ? 'Nota Fiscal Emitida' : 'Aguardando Emissão da Nota Fiscal'}</h4>
+                                    {timelineData.nf && (
+                                        <>
+                                            <p className="text-slate-300 text-sm mt-1">A Contabilidade gerou a NF-e <span className="font-bold">Nº {timelineData.nf.numero_nf}</span>.</p>
+                                            <p className="text-slate-500 text-xs mt-1">Vencimento projetado pelo Convênio: <span className="text-amber-400 font-bold">{new Date(timelineData.lote.data_vencimento + 'T12:00:00Z').toLocaleDateString('pt-BR')}</span></p>
+                                        </>
+                                    )}
+                                </div>
+
+                                {/* Evento 4: Liquidação / Fim da Régua */}
+                                <div className={`relative pl-8 ${timelineData.lote.status !== 'Liquidado' ? 'opacity-20' : ''}`}>
+                                    <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-emerald-600 ring-4 ring-slate-800"></div>
+                                    <h4 className="font-bold text-emerald-500">Fluxo Encerrado (Recebido)</h4>
+                                    {timelineData.lote.status === 'Liquidado' && (
+                                        <p className="text-emerald-400 text-sm mt-1 font-medium bg-emerald-900/20 inline-block p-1 px-3 rounded border border-emerald-900/50">
+                                            Valor liquidado na conta do grupo em {new Date(timelineData.lote.data_pagamento + 'T12:00:00Z').toLocaleDateString('pt-BR')}.
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                )}
             </form>
 
             {/* BARRA INFERIOR FIXA NA BASE DO FLEX-COL */}
